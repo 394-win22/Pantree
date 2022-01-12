@@ -1,5 +1,7 @@
 import "./App.css";
 import React from "react";
+import ReactDOM from "react-dom";
+
 import { useState, useEffect } from "react";
 
 const grocery = {
@@ -38,12 +40,22 @@ const Food = ({ food }) => (
 
 const AddButton = () => (
   <>
+<<<<<<< HEAD
     <button type="button" >
+=======
+    <button
+      type="button"
+      onClick={() =>
+        ReactDOM.render(<MyForm />, document.getElementById("root"))
+      }
+    >
+>>>>>>> 118d39b4e63424f646a2596dedeb761c5cb1b36d
       Click Me
     </button>
   </>
 );
 
+<<<<<<< HEAD
 const handleClick = () => (
   <form>
     <label>
@@ -53,6 +65,42 @@ const handleClick = () => (
     <input type="submit" value="Submit" />
   </form>
 );
+=======
+const MyForm = () => {
+  const [name, setName] = useState("");
+
+  return (
+    <form>
+      <label>
+        Enter your food:
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+      </label>
+      <div></div>
+      <label>
+        The Purchase Date:
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+      </label>
+      <div></div>
+      <label>
+        The Expiration Date:
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+      </label>
+    </form>
+  );
+};
+>>>>>>> 118d39b4e63424f646a2596dedeb761c5cb1b36d
 
 const App = () => (
   <div>
