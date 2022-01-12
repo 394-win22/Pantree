@@ -1,24 +1,8 @@
 import "./App.css";
 import React from "react";
 import ReactDOM from "react-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useData } from './utilities/firebase.js';
-
-let grocery = {
-  title: "My Kitchen",
-  foods: {
-    milk: {
-      name: "milk",
-      buyDate: "Jan 11",
-      expDate: "Jan 15",
-    },
-    apple: {
-      name: "apple",
-      buyDate: "Jan 11",
-      expDate: "Jan 16",
-    },
-  },
-};
 
 const FoodList = ({ foods }) => (
   <div className="food-list">
@@ -38,13 +22,12 @@ const Food = ({ food }) => (
   </div>
 );
 
-const AddButton = () => (
+const AddButton = ({ grocery }) => (
   <>
     <button
       type="button"
       onClick={() =>
-        //ReactDOM.render(<MyForm />, document.getElementById("root"))
-        updateNback()
+        ReactDOM.render(<MyForm grocery = { grocery } />, document.getElementById("root"))
       }
     >
       Click Me
@@ -53,17 +36,19 @@ const AddButton = () => (
 );
 
 //Update the state with new items and
-const updateNback = () => {
-  grocery.foods["orange"] = {
-    name: "orange",
-    buyDate: "Jan 11",
-    expDate: "Jan 15",
+const updateNback = ({ name, buyDate, expDate, grocery }) => {
+  grocery.foods[name] = {
+    name: name,
+    buyDate: buyDate,
+    expDate: expDate,
   };
   ReactDOM.render(<MyForm />, document.getElementById("root"));
 };
 
-const MyForm = () => {
+const MyForm = ({ grocery }) => {
   const [name, setName] = useState("");
+  const [buyDate, setbuyDate] = useState("");
+  const [expDate, setexpDate] = useState("");
 
   return (
     <form>
@@ -80,8 +65,8 @@ const MyForm = () => {
         The Purchase Date:
         <input
           type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={buyDate}
+          onChange={(e) => setbuyDate(e.target.value)}
         />
       </label>
       <div></div>
@@ -89,14 +74,14 @@ const MyForm = () => {
         The Expiration Date:
         <input
           type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={expDate}
+          onChange={(e) => setexpDate(e.target.value)}
         />
       </label>
       <p></p>
       <button
         onClick={() =>
-          ReactDOM.render(<App />, document.getElementById("root"))
+          updateNback({ name, buyDate, expDate, grocery })
         }
       >
         Enter
@@ -107,19 +92,19 @@ const MyForm = () => {
 
 const App = () => {
 
-  const [grocery, loading, error] = useData('/'); 
-  
+  const [grocery, loading, error] = useData('/');
+
   if (error) return <h1>{error}</h1>;
   if (loading) return <h1>Loading the schedule...</h1>
 
-    return(
+  return (
     <div>
-        <h1>{grocery.title}</h1>
-        <FoodList foods={grocery.foods} />
-        <AddButton />
-      </div>
-    );
-  
-  };
+      <h1>{grocery.title}</h1>
+      <FoodList foods={ grocery.foods } />
+      <AddButton grocery = { grocery }/>
+    </div>
+  );
+
+};
 
 export default App;
