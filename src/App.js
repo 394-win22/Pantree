@@ -2,9 +2,9 @@ import "./App.css";
 import React from "react";
 import ReactDOM from "react-dom";
 
-import { useState} from "react";
+import { useState } from "react";
 
-const grocery = {
+let grocery = {
   title: "My Kitchen",
   foods: {
     milk: {
@@ -29,7 +29,7 @@ const FoodList = ({ foods }) => (
 );
 
 const Food = ({ food }) => (
-  <div className="card m-1 p-2">
+  <div className="card m-1 p-2" onClick = {() => deleteItem( {food} )}>
     <div className="card-body">
       <div className="card-title">{food.name}</div>
       <div className="card-text">{food.buyDate}</div>
@@ -51,8 +51,26 @@ const AddButton = () => (
   </>
 );
 
+const deleteItem = ( {food} ) => {
+  alert(food.name + " deleted!");
+  delete(grocery.foods[food.name]);
+  ReactDOM.render(<App />, document.getElementById("root"));
+}
+
+//Update the state with new items and
+const updateNback = ({ name, buyDate, expDate }) => {
+  grocery.foods[name] = {
+    name: name,
+    buyDate: buyDate,
+    expDate: expDate,
+  };
+  ReactDOM.render(<App />, document.getElementById("root"));
+};
+
 const MyForm = () => {
   const [name, setName] = useState("");
+  const [buyDate, setbuyDate] = useState("")
+  const [expDate, setexpDate] = useState("")
 
   return (
     <form>
@@ -69,8 +87,8 @@ const MyForm = () => {
         The Purchase Date:
         <input
           type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={ buyDate }
+          onChange={(e) => setbuyDate(e.target.value)}
         />
       </label>
       <div></div>
@@ -78,10 +96,18 @@ const MyForm = () => {
         The Expiration Date:
         <input
           type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={ expDate }
+          onChange={(e) => setexpDate(e.target.value)}
         />
       </label>
+      <p></p>
+      <button
+        onClick={() =>
+          updateNback({ name, buyDate, expDate })
+        }
+      >
+        Enter
+      </button>
     </form>
   );
 };
@@ -91,7 +117,6 @@ const App = () => (
     <h1>{grocery.title}</h1>
     <FoodList foods={grocery.foods} />
     <AddButton />
-    <handleClick />
   </div>
 );
 
