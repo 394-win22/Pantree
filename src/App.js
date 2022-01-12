@@ -1,8 +1,8 @@
 import "./App.css";
 import React from "react";
 import ReactDOM from "react-dom";
-
 import { useState, useEffect } from "react";
+import { useData } from './utilities/firebase.js';
 
 let grocery = {
   title: "My Kitchen",
@@ -105,12 +105,21 @@ const MyForm = () => {
   );
 };
 
-const App = () => (
-  <div>
-    <h1>{grocery.title}</h1>
-    <FoodList foods={grocery.foods} />
-    <AddButton />
-  </div>
-);
+const App = () => {
+
+  const [grocery, loading, error] = useData('/'); 
+  
+  if (error) return <h1>{error}</h1>;
+  if (loading) return <h1>Loading the schedule...</h1>
+
+    return(
+    <div>
+        <h1>{grocery.title}</h1>
+        <FoodList foods={grocery.foods} />
+        <AddButton />
+      </div>
+    );
+  
+  };
 
 export default App;
