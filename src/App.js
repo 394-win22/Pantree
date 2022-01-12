@@ -38,10 +38,20 @@ const Food = ({ food }) => (
 
 const AddButton = () => (
   <>
-    <button type="button" onClick={() => alert("double click")}>
+    <button type="button" >
       Click Me
     </button>
   </>
+);
+
+const handleClick = () => (
+  <form>
+    <label>
+      Name:
+      <input type="text" name="name" />
+    </label>
+    <input type="submit" value="Submit" />
+  </form>
 );
 
 const App = () => (
@@ -49,6 +59,7 @@ const App = () => (
     <h1>{grocery.title}</h1>
     <FoodList foods={grocery.foods} />
     <AddButton />
+    <handleClick />
   </div>
 );
 
