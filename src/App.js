@@ -3,17 +3,29 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { useState, useEffect } from "react";
 import { useData } from './utilities/firebase.js';
+import { MainLayout, 
+        Header, 
+        H1, 
+        Content, 
+        ItemCard, 
+        ItemImg, 
+        ItemName, 
+        PurchaseDate, 
+        ExpDate } from './styles/PantryStyles.js'
+import MilkPhoto from './utilities/milk.png'
 
 let grocery = {
   title: "My Kitchen",
   foods: {
     milk: {
-      name: "milk",
+      image: "",
+      name: "Milk",
       buyDate: "Jan 11",
       expDate: "Jan 15",
     },
     apple: {
-      name: "apple",
+      image: "",
+      name: "Apple",
       buyDate: "Jan 11",
       expDate: "Jan 16",
     },
@@ -29,13 +41,14 @@ const FoodList = ({ foods }) => (
 );
 
 const Food = ({ food }) => (
-  <div className="card m-1 p-2">
-    <div className="card-body">
-      <div className="card-title">{food.name}</div>
-      <div className="card-text">{food.buyDate}</div>
-      <div className="card-text">{food.expDate}</div>
-    </div>
-  </div>
+  <>
+    <ItemCard>
+      <ItemImg src={MilkPhoto} />
+      <ItemName>{food.name}</ItemName>
+      <PurchaseDate>{food.buyDate}</PurchaseDate>
+      <ExpDate>{food.expDate}</ExpDate>
+    </ItemCard>
+  </>
 );
 
 const AddButton = () => (
@@ -113,11 +126,17 @@ const App = () => {
   if (loading) return <h1>Loading the schedule...</h1>
 
     return(
-    <div>
-        <h1>{grocery.title}</h1>
-        <FoodList foods={grocery.foods} />
-        <AddButton />
-      </div>
+    <>
+        <MainLayout>
+            <Header>
+                <H1>{grocery.title}</H1>
+            </Header>
+            <Content>
+                <FoodList foods={grocery.foods} />
+                <AddButton />
+            </Content>
+        </MainLayout>
+    </>
     );
   
   };
