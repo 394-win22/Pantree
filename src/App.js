@@ -2,7 +2,7 @@ import "./App.css";
 import React from "react";
 import ReactDOM from "react-dom";
 
-import { useState, useEffect } from "react";
+import { useState} from "react";
 
 const grocery = {
   title: "My Kitchen",
@@ -40,32 +40,17 @@ const Food = ({ food }) => (
 
 const AddButton = () => (
   <>
-<<<<<<< HEAD
-    <button type="button" >
-=======
     <button
       type="button"
       onClick={() =>
         ReactDOM.render(<MyForm />, document.getElementById("root"))
       }
     >
->>>>>>> 118d39b4e63424f646a2596dedeb761c5cb1b36d
       Click Me
     </button>
   </>
 );
 
-<<<<<<< HEAD
-const handleClick = () => (
-  <form>
-    <label>
-      Name:
-      <input type="text" name="name" />
-    </label>
-    <input type="submit" value="Submit" />
-  </form>
-);
-=======
 const MyForm = () => {
   const [name, setName] = useState("");
 
@@ -100,7 +85,6 @@ const MyForm = () => {
     </form>
   );
 };
->>>>>>> 118d39b4e63424f646a2596dedeb761c5cb1b36d
 
 const App = () => (
   <div>
