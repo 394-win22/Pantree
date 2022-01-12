@@ -56,6 +56,7 @@ const AddButton = () => (
   <>
     <button
       type="button"
+      className="btn"
       onClick={() =>
         ReactDOM.render(<MyForm />, document.getElementById("root"))
       }
@@ -78,60 +79,76 @@ const deleteButton = async ({ food }) => {
 
 
 //Update the state with new items and
-const updateNback = ({name, buyDate, expDate}) => {
+const update = ({name, buyDate, expDate}) => {
   grocery.foods[name] = {
     name: name,
     buyDate: buyDate,
     expDate: expDate,
   };
-  ReactDOM.render(<App />, document.getElementById("root"));
+  
 };
+
+const back = ()=> {
+  ReactDOM.render(<App />, document.getElementById("root"));
+}
 
 const MyForm = () => {
   const [name, setName] = useState("");
   const [buyDate, setbuyDate] = useState("")
   const [expDate, setexpDate] = useState("")
+  
+  const onSubmit = (e) => {
+    e.preventDefault()
+
+    if (!name || !buyDate || !expDate) {
+      alert('Please add a all Food Item data')
+      return
+    }
+    update({name, buyDate, expDate})
+
+
+    setName('')
+    setbuyDate('')
+    setexpDate('')
+
+  }
 
   return (
-    <form>
-      <label>
-        Enter your food:
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-      </label>
-      <div></div>
-      <label>
-        The Purchase Date:
-        <input
-          type="text"
-          value={buyDate}
-          onChange={(e) => setbuyDate(e.target.value)}
-        />
-      </label>
-      <div></div>
-      <label>
-        The Expiration Date:
-        <input
-          type="text"
-          value={expDate}
-          onChange={(e) => setexpDate(e.target.value)}
-        />
-      </label>
-      <p></p>
-      <button
-        onClick={() =>
-          updateNback({name, buyDate, expDate})
-        }
-      >
-        Enter
-      </button>
-    </form>
+    <div className="container">
+      <form className='add-form' onSubmit={onSubmit}>
+        <div className='form-control'>
+          <label>Name</label>
+          <input
+            type='text'
+            placeholder='Add Food'
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
+        <div className='form-control'>
+          <label>Purchase Date</label>
+          <input
+            type='text'
+            placeholder='Purchase Date'
+            value={buyDate}
+            onChange={(e) => setbuyDate(e.target.value)}
+          />
+        </div>
+        <div className='form-control'>
+          <label>Expire Date</label>
+          <input
+            type='text'
+            placeholder='Expire Date'
+            value={expDate}
+            onChange={(e) => setexpDate(e.target.value)}
+          />
+        </div>
+
+        <input type='submit' value='Add item' className='btn btn-block' />
+        <input type='submit' value='Back' className='btn' onClick={back}/>
+      </form></div>
   );
 };
-
 const App = () => {
 
   //const [grocery, loading, error] = useData('/'); 
