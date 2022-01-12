@@ -1,5 +1,7 @@
 import "./App.css";
 import React from "react";
+import ReactDOM from "react-dom";
+
 import { useState, useEffect } from "react";
 
 const grocery = {
@@ -38,11 +40,51 @@ const Food = ({ food }) => (
 
 const AddButton = () => (
   <>
-    <button type="button" onClick={() => alert("double click")}>
+    <button
+      type="button"
+      onClick={() =>
+        ReactDOM.render(<MyForm />, document.getElementById("root"))
+      }
+    >
       Click Me
     </button>
   </>
 );
+
+const MyForm = () => {
+  const [name, setName] = useState("");
+
+  return (
+    <form>
+      <label>
+        Enter your food:
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+      </label>
+      <div></div>
+      <label>
+        The Purchase Date:
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+      </label>
+      <div></div>
+      <label>
+        The Expiration Date:
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+      </label>
+    </form>
+  );
+};
 
 const App = () => (
   <div>
