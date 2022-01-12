@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 
 import { useState, useEffect } from "react";
 
-const grocery = {
+let grocery = {
   title: "My Kitchen",
   foods: {
     milk: {
@@ -43,13 +43,24 @@ const AddButton = () => (
     <button
       type="button"
       onClick={() =>
-        ReactDOM.render(<MyForm />, document.getElementById("root"))
+        //ReactDOM.render(<MyForm />, document.getElementById("root"))
+        updateNback()
       }
     >
       Click Me
     </button>
   </>
 );
+
+//Update the state with new items and
+const updateNback = () => {
+  grocery.foods["orange"] = {
+    name: "orange",
+    buyDate: "Jan 11",
+    expDate: "Jan 15",
+  };
+  ReactDOM.render(<MyForm />, document.getElementById("root"));
+};
 
 const MyForm = () => {
   const [name, setName] = useState("");
@@ -82,6 +93,14 @@ const MyForm = () => {
           onChange={(e) => setName(e.target.value)}
         />
       </label>
+      <p></p>
+      <button
+        onClick={() =>
+          ReactDOM.render(<App />, document.getElementById("root"))
+        }
+      >
+        Enter
+      </button>
     </form>
   );
 };
