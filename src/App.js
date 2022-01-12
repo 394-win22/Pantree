@@ -2,7 +2,36 @@ import "./App.css";
 import React from "react";
 import ReactDOM from "react-dom";
 import { useState } from "react";
+import { confirm } from "react-confirm-box";
 import { useData } from './utilities/firebase.js';
+import { MainLayout, 
+        Header, 
+        H1, 
+        Content, 
+        ItemCard, 
+        ItemImg, 
+        ItemName, 
+        PurchaseDate, 
+        ExpDate } from './styles/PantryStyles.js'
+import MilkPhoto from './utilities/milk.png'
+
+let grocery = {
+  title: "My Kitchen",
+  foods: {
+    Milk: {
+      image: "",
+      name: "Milk",
+      buyDate: "Jan 11",
+      expDate: "Jan 15",
+    },
+    Apple: {
+      image: "",
+      name: "Apple",
+      buyDate: "Jan 11",
+      expDate: "Jan 16",
+    },
+  },
+};
 
 const FoodList = ({ foods }) => (
   <div className="food-list">
@@ -13,21 +42,22 @@ const FoodList = ({ foods }) => (
 );
 
 const Food = ({ food }) => (
-  <div className="card m-1 p-2">
-    <div className="card-body">
-      <div className="card-title">{food.name}</div>
-      <div className="card-text">{food.buyDate}</div>
-      <div className="card-text">{food.expDate}</div>
-    </div>
-  </div>
+  <>
+    <ItemCard onClick = {() => deleteButton({ food }) }>
+      <ItemImg src={MilkPhoto} />
+      <ItemName>{food.name}</ItemName>
+      <PurchaseDate>{food.buyDate}</PurchaseDate>
+      <ExpDate>{food.expDate}</ExpDate>
+    </ItemCard>
+  </>
 );
 
-const AddButton = ({ grocery }) => (
+const AddButton = () => (
   <>
     <button
       type="button"
       onClick={() =>
-        ReactDOM.render(<MyForm grocery = { grocery } />, document.getElementById("root"))
+        ReactDOM.render(<MyForm />, document.getElementById("root"))
       }
     >
       Click Me
@@ -35,20 +65,32 @@ const AddButton = ({ grocery }) => (
   </>
 );
 
+
+const deleteButton = async ({ food }) => {
+  const result = await confirm("Are you sure?");
+  if (result) {
+    delete(grocery.foods[food.name]);
+    ReactDOM.render(<App />, document.getElementById("root"));
+    return;
+  }
+};
+
+
+
 //Update the state with new items and
-const updateNback = ({ name, buyDate, expDate, grocery }) => {
+const updateNback = ({name, buyDate, expDate}) => {
   grocery.foods[name] = {
     name: name,
     buyDate: buyDate,
     expDate: expDate,
   };
-  ReactDOM.render(<MyForm />, document.getElementById("root"));
+  ReactDOM.render(<App />, document.getElementById("root"));
 };
 
-const MyForm = ({ grocery }) => {
+const MyForm = () => {
   const [name, setName] = useState("");
-  const [buyDate, setbuyDate] = useState("");
-  const [expDate, setexpDate] = useState("");
+  const [buyDate, setbuyDate] = useState("")
+  const [expDate, setexpDate] = useState("")
 
   return (
     <form>
@@ -81,7 +123,7 @@ const MyForm = ({ grocery }) => {
       <p></p>
       <button
         onClick={() =>
-          updateNback({ name, buyDate, expDate, grocery })
+          updateNback({name, buyDate, expDate})
         }
       >
         Enter
@@ -92,19 +134,25 @@ const MyForm = ({ grocery }) => {
 
 const App = () => {
 
-  const [grocery, loading, error] = useData('/');
+  //const [grocery, loading, error] = useData('/'); 
+  
+  //if (error) return <h1>{error}</h1>;
+  //if (loading) return <h1>Loading the schedule...</h1>
 
-  if (error) return <h1>{error}</h1>;
-  if (loading) return <h1>Loading the schedule...</h1>
-
-  return (
-    <div>
-      <h1>{grocery.title}</h1>
-      <FoodList foods={ grocery.foods } />
-      <AddButton grocery = { grocery }/>
-    </div>
-  );
-
+  return(
+    <>
+        <MainLayout>
+            <Header>
+                <H1>{grocery.title}</H1>
+            </Header>
+            <Content>
+                <FoodList foods={grocery.foods} />
+                <AddButton />
+            </Content>
+        </MainLayout>
+    </>
+    );
+  
 };
 
 export default App;
