@@ -138,7 +138,7 @@ const MyForm = () => {
       return;
     }
 
-    if (new Date(buyDate).getTime() - new Date(expDate).getTime() < 0) {
+    if (new Date(buyDate).getTime() - new Date(expDate).getTime() > 0) {
       alert("The expiration date must be after the buy date!");
       return;
     }
@@ -162,7 +162,7 @@ const MyForm = () => {
             onChange={(e) =>
               setName(
                 e.target.value.length > 10
-                  ? e.target.value.slice(0, 10)
+                  ? e.target.value.slice(0, 10) +'...'
                   : e.target.value
               )
             }
