@@ -3,7 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { useState } from "react";
 import { confirm } from "react-confirm-box";
-import { useData } from './utilities/firebase.js';
+import { useData, setData } from './utilities/firebase.js';
 import { MainLayout, 
         Header, 
         H1, 
@@ -35,8 +35,8 @@ let grocery = {
 
 const FoodList = ({ foods }) => (
   <div className="food-list">
-    {Object.values(foods).map((food) => (
-      <Food food={food} />
+    {Object.values(foods).map((food, index) => (
+      <Food key={index} food={food} />
     ))}
   </div>
 );
@@ -76,16 +76,27 @@ const deleteButton = async ({ food }) => {
   }
 };
 
-
+const pushToFirebase = async (foodie) => {
+  if (foodie) {
+    try {
+      await setData(`/foods/${foodie.id}/`, foodie);
+    } catch (error) {
+      alert(error);
+    }
+  }
+};
 
 //Update the state with new items and
 const update = ({name, buyDate, expDate}) => {
-  grocery.foods[name] = {
-    name: name,
-    buyDate: buyDate,
-    expDate: expDate,
+  const namex = {
+    "name": name,
+    "buyDate": buyDate,
+    "expDate": expDate
   };
-  
+
+  const id = Math.round(Math.random() * 10000)
+  const newFood = { id, ...namex }
+  pushToFirebase(newFood);  
 };
 
 const back = ()=> {
@@ -151,19 +162,20 @@ const MyForm = () => {
 };
 const App = () => {
 
-  //const [grocery, loading, error] = useData('/'); 
+
+  const [groceryy, loading, error] = useData('/'); 
   
-  //if (error) return <h1>{error}</h1>;
-  //if (loading) return <h1>Loading the schedule...</h1>
+  if (error) return <h1>{error}</h1>;
+  if (loading) return <h1>Loading the schedule...</h1>
 
   return(
     <>
         <MainLayout>
             <Header>
-                <H1>{grocery.title}</H1>
+                <H1>{groceryy.title}</H1>
             </Header>
             <Content>
-                <FoodList foods={grocery.foods} />
+                <FoodList foods={groceryy.foods} />
                 <AddButton />
             </Content>
         </MainLayout>
