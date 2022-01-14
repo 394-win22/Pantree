@@ -16,6 +16,7 @@ import {
   ExpDate,
 } from "./styles/PantryStyles.js";
 import MilkPhoto from "./utilities/milk.png";
+import { isCompositeComponent } from "react-dom/cjs/react-dom-test-utils.production.min";
 
 // TODO: Find a way to sort the foods
 const FoodList = ({ foods }) => {
@@ -33,16 +34,41 @@ const FoodList = ({ foods }) => {
   );
 };
 
-const Food = ({ food }) => (
-  <>
+// to calculate the number of days between
+// d1: expiration date for the food item
+// d2: today's date
+const numDaysBetween = (d1, d2) => {
+  const diff = d1.getTime() - d2.getTime();
+  return (diff / (1000 * 60 * 60 * 24))
+};
+
+// return different numbers depending on expiration status
+const Expired = (a) => {
+  const today = new Date().toISOString().substring(0, 10);
+  const diff = numDaysBetween(new Date(a),new Date(today))
+  if(diff<0){ // expired
+    return 0
+  }
+  else if((diff<=3 && diff >=0)){ // expiring soon (within 3 days)
+    return 1
+  }
+  else{ // not gonna expire soon
+    return 2
+  }
+}
+
+const Food = ({ food }) => {
+  return(
     <ItemCard onClick={() => deleteButton({ food })}>
       <ItemImg src={MilkPhoto} />
-      <ItemName>{food.name}</ItemName>
-      <PurchaseDate>{food.buyDate}</PurchaseDate>
-      <ExpDate>{food.expDate}</ExpDate>
+      <ItemName >{food.name}</ItemName>
+      <PurchaseDate >{food.buyDate}</PurchaseDate>
+      <ExpDate color={Expired(food.expDate)}>
+        {food.expDate}
+      </ExpDate> 
     </ItemCard>
-  </>
-);
+   )
+};
 
 const AddButton = () => (
   <>

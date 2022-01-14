@@ -75,6 +75,9 @@ export const ItemName = styled.p`
         color: #000000;
         text-transform: capitalize;
         overflow-wrap: break-word;
+        ${({ active }) => active && `
+        color: red;
+      `}
     `
 
 export const PurchaseDate = styled.p`
@@ -87,11 +90,22 @@ export const PurchaseDate = styled.p`
     `
 
 export const ExpDate = styled.p`
-        grid-area: exp-date; 
-        font-family: Quicksand;
-        font-style: normal;
-        font-weight: bold;
-        font-size: 14px;
-        color: #989898;
-        align-self: top;
-    `
+    grid-area: exp-date; 
+    font-family: Quicksand;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    align-self: top;
+    color: ${({ color }) => handleColorType(color)};
+`
+
+const handleColorType = color => {
+    switch (color) {
+      case 2: // not gonna expire soon
+        return "#989898";
+      case 1: // about to expire
+        return "#ffa500";
+      case 0: //expired
+        return "#ff0000";
+    }
+  };
