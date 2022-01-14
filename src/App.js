@@ -35,13 +35,21 @@ let grocery = {
   },
 };
 
-const FoodList = ({ foods }) => (
-  <div className="food-list">
-    {Object.values(foods).map((food, index) => (
-      <Food key={index} food={food} />
-    ))}
-  </div>
-);
+// TODO: Find a way to sort the foods
+const FoodList = ({ foods }) => {
+  const sortedFoods = Object.values(foods).sort((a, b) => {
+    return new Date(a.expDate).getTime() - new Date(b.expDate).getTime();
+  });
+
+  // console.log(typeof sortedFoods[0].expDate);
+  return (
+    <div className="food-list">
+      {Object.values(sortedFoods).map((food, index) => (
+        <Food key={index} food={food} />
+      ))}
+    </div>
+  );
+};
 
 const Food = ({ food }) => (
   <>
