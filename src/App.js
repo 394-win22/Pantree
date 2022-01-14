@@ -139,7 +139,7 @@ const MyForm = () => {
         <div className='form-control'>
           <label>Purchase Date</label>
           <input
-            type='text'
+            type='date'
             placeholder='Purchase Date'
             value={buyDate}
             onChange={(e) => setbuyDate(e.target.value)}
@@ -148,7 +148,7 @@ const MyForm = () => {
         <div className='form-control'>
           <label>Expire Date</label>
           <input
-            type='text'
+            type='date'
             placeholder='Expire Date'
             value={expDate}
             onChange={(e) => setexpDate(e.target.value)}
