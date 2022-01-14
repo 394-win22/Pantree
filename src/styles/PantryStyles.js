@@ -48,7 +48,7 @@ export const ItemCard = styled.div`
         border-radius: 15px;
         margin-bottom: 27px;
         grid-template-columns: 38% 62%;
-        grid-template-rows: 50% 15% 20%;
+        grid-template-rows: 46% 19% 20%;
         grid-template-areas: 
             'img item-name '
             'img purchase-date'
@@ -71,7 +71,6 @@ export const ItemName = styled.p`
         font-style: normal;
         font-weight: 600;
         font-size: 24px;
-        line-height: 24px;
         margin-top: 20px;
         color: #000000;
         text-transform: capitalize;
