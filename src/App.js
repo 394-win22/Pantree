@@ -162,7 +162,7 @@ const MyForm = () => {
             onChange={(e) =>
               setName(
                 e.target.value.length > 10
-                  ? e.target.value.slice(0, 10) + "..."
+                  ? e.target.value.slice(0, 10)
                   : e.target.value
               )
             }
