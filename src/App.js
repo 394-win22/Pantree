@@ -3,17 +3,19 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { useState } from "react";
 import { confirm } from "react-confirm-box";
-import { useData, setData } from './utilities/firebase.js';
-import { MainLayout, 
-        Header, 
-        H1, 
-        Content, 
-        ItemCard, 
-        ItemImg, 
-        ItemName, 
-        PurchaseDate, 
-        ExpDate } from './styles/PantryStyles.js'
-import MilkPhoto from './utilities/milk.png'
+import { useData, setData } from "./utilities/firebase.js";
+import {
+  MainLayout,
+  Header,
+  H1,
+  Content,
+  ItemCard,
+  ItemImg,
+  ItemName,
+  PurchaseDate,
+  ExpDate,
+} from "./styles/PantryStyles.js";
+import MilkPhoto from "./utilities/milk.png";
 
 let grocery = {
   title: "My Kitchen",
@@ -43,7 +45,7 @@ const FoodList = ({ foods }) => (
 
 const Food = ({ food }) => (
   <>
-    <ItemCard onClick = {() => deleteButton({ food }) }>
+    <ItemCard onClick={() => deleteButton({ food })}>
       <ItemImg src={MilkPhoto} />
       <ItemName>{food.name}</ItemName>
       <PurchaseDate>{food.buyDate}</PurchaseDate>
@@ -66,11 +68,21 @@ const AddButton = () => (
   </>
 );
 
+const deleteFromFirebase = async (foodie) => {
+  if (foodie) {
+    try {
+      await setData(`/foods/${foodie.id}/`, null);
+    } catch (error) {
+      alert(error);
+    }
+  }
+};
 
 const deleteButton = async ({ food }) => {
   const result = await confirm("Are you sure?");
   if (result) {
-    delete(grocery.foods[food.name]);
+    deleteFromFirebase(food);
+    alert("Item Delection Done!");
     ReactDOM.render(<App />, document.getElementById("root"));
     return;
   }
@@ -87,101 +99,97 @@ const pushToFirebase = async (foodie) => {
 };
 
 //Update the state with new items and
-const update = ({name, buyDate, expDate}) => {
+const update = ({ name, buyDate, expDate }) => {
   const namex = {
-    "name": name,
-    "buyDate": buyDate,
-    "expDate": expDate
+    name: name,
+    buyDate: buyDate,
+    expDate: expDate,
   };
 
-  const id = Math.round(Math.random() * 10000)
-  const newFood = { id, ...namex }
-  pushToFirebase(newFood);  
+  const id = Math.round(Math.random() * 10000);
+  const newFood = { id, ...namex };
+  pushToFirebase(newFood);
 };
 
-const back = ()=> {
+const back = () => {
   ReactDOM.render(<App />, document.getElementById("root"));
-}
+};
 
 const MyForm = () => {
   const [name, setName] = useState("");
-  const [buyDate, setbuyDate] = useState("")
-  const [expDate, setexpDate] = useState("")
-  
+  const [buyDate, setbuyDate] = useState("");
+  const [expDate, setexpDate] = useState("");
+
   const onSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (!name || !buyDate || !expDate) {
-      alert('Please add a all Food Item data')
-      return
+      alert("Please add a all Food Item data");
+      return;
     }
-    update({name, buyDate, expDate})
+    update({ name, buyDate, expDate });
 
-
-    setName('')
-    setbuyDate('')
-    setexpDate('')
-
-  }
+    setName("");
+    setbuyDate("");
+    setexpDate("");
+  };
 
   return (
     <div className="container">
-      <form className='add-form' onSubmit={onSubmit}>
-        <div className='form-control'>
+      <form className="add-form" onSubmit={onSubmit}>
+        <div className="form-control">
           <label>Name</label>
           <input
-            type='text'
-            placeholder='Add Food'
+            type="text"
+            placeholder="Add Food"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
         </div>
-        <div className='form-control'>
+        <div className="form-control">
           <label>Purchase Date</label>
           <input
-            type='date'
-            placeholder='Purchase Date'
+            type="date"
+            placeholder="Purchase Date"
             value={buyDate}
             onChange={(e) => setbuyDate(e.target.value)}
           />
         </div>
-        <div className='form-control'>
+        <div className="form-control">
           <label>Expire Date</label>
           <input
-            type='date'
-            placeholder='Expire Date'
+            type="date"
+            placeholder="Expire Date"
             value={expDate}
             onChange={(e) => setexpDate(e.target.value)}
           />
         </div>
 
-        <input type='submit' value='Add item' className='btn btn-block' />
-        <input type='submit' value='Back' className='btn' onClick={back}/>
-      </form></div>
+        <input type="submit" value="Add item" className="btn btn-block" />
+        <input type="submit" value="Back" className="btn" onClick={back} />
+      </form>
+    </div>
   );
 };
 const App = () => {
+  const [groceryy, loading, error] = useData("/");
 
-
-  const [groceryy, loading, error] = useData('/'); 
-  
   if (error) return <h1>{error}</h1>;
-  if (loading) return <h1>Loading the schedule...</h1>
+  if (loading) return <h1>Loading the schedule...</h1>;
 
-  return(
+  return (
     <>
-        <MainLayout>
-            <Header>
-                <H1>{groceryy.title}</H1>
-            </Header>
-            <Content>
-                <FoodList foods={groceryy.foods} />
-                <AddButton />
-            </Content>
-        </MainLayout>
+      <MainLayout>
+        <Header>
+          <H1>{groceryy.title}</H1>
+        </Header>
+        <Content>
+          <FoodList foods={groceryy.foods} />
+          <AddButton />
+        </Content>
+      </MainLayout>
     </>
-    );
-  
+  );
 };
 
 export default App;
