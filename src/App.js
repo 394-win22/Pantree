@@ -17,24 +17,6 @@ import {
 } from "./styles/PantryStyles.js";
 import MilkPhoto from "./utilities/milk.png";
 
-let grocery = {
-  title: "My Kitchen",
-  foods: {
-    Milk: {
-      image: "",
-      name: "Milk",
-      buyDate: "Jan 11",
-      expDate: "Jan 15",
-    },
-    Apple: {
-      image: "",
-      name: "Apple",
-      buyDate: "Jan 11",
-      expDate: "Jan 16",
-    },
-  },
-};
-
 // TODO: Find a way to sort the foods
 const FoodList = ({ foods }) => {
   const sortedFoods = Object.values(foods).sort((a, b) => {
@@ -138,8 +120,8 @@ const MyForm = () => {
       return;
     }
 
-    if (new Date(buyDate).getTime() - new Date(expDate).getTime() < 0) {
-      alert("The expiration date must be after the buy date!");
+    if (new Date(expDate).getTime() - new Date(buyDate).getTime() < 0){
+      alert("Please make sure the expiration date after the buy date");
       return;
     }
 
