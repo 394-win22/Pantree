@@ -124,9 +124,11 @@ const back = () => {
 };
 
 const MyForm = () => {
+  const today = new Date().toISOString().substring(0, 10);
+
   const [name, setName] = useState("");
-  const [buyDate, setbuyDate] = useState("");
-  const [expDate, setexpDate] = useState("");
+  const [buyDate, setbuyDate] = useState(today);
+  const [expDate, setexpDate] = useState(today);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -135,6 +137,12 @@ const MyForm = () => {
       alert("Please add a all Food Item data");
       return;
     }
+
+    if (new Date(buyDate).getTime() - new Date(expDate).getTime() < 0) {
+      alert("The expiration date must be after the buy date!");
+      return;
+    }
+
     update({ name, buyDate, expDate });
 
     setName("");
@@ -151,7 +159,13 @@ const MyForm = () => {
             type="text"
             placeholder="Add Food"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) =>
+              setName(
+                e.target.value.length > 10
+                  ? e.target.value.slice(0, 10) + "..."
+                  : e.target.value
+              )
+            }
           />
         </div>
         <div className="form-control">
