@@ -15,6 +15,8 @@ const firebaseConfig = {
 const firebase = initializeApp(firebaseConfig);
 const database = getDatabase(firebase);
 
+
+
 export const useData = (path, transform) => {
     const [data, setData] = useState();
     const [loading, setLoading] = useState(true);
@@ -43,3 +45,24 @@ export const useData = (path, transform) => {
   export const setData = (path, value) => (
     set(ref(database, path), value)
   );
+
+  export const deleteFromFirebase = async (foodie) => {
+    if (foodie) {
+      try {
+        await setData(`/foods/${foodie.id}/`, null);
+      } catch (error) {
+        alert(error);
+      }
+    }
+  };
+
+  export const pushToFirebase = async (foodie) => {
+    if (foodie) {
+      try {
+        await setData(`/foods/${foodie.id}/`, foodie);
+      } catch (error) {
+        alert(error);
+      }
+    }
+  };
+  
