@@ -13,6 +13,7 @@ import {
 import { GetPhoto } from "./utilities/firebaseStorage.js";
 import {App} from "./App";
 import MilkPhoto from "./utilities/milk.png";
+import { FaTimes } from 'react-icons/fa';
 
 //It is able to get the URL. The problem is making it Async so it can actual be displayed.
 //TODO fix PROMISE<Pending>
@@ -42,7 +43,12 @@ const Food = ({ food }) => {
     return(
       <ItemCard onClick={() => deleteButton({ food })}>
         <ItemImg src={MilkPhoto} />
-        <ItemName >{food.name}</ItemName>
+        <ItemName >{food.name} {' '}
+            <FaTimes
+              style={{ color: 'red', float: 'right', cursor: 'pointer' }}
+              onClick={() => deleteButton(food)}
+            />
+        </ItemName>
         <PurchaseDate >{food.buyDate}</PurchaseDate>
         <ExpDate color={Expired(food.expDate)}>
           {food.expDate}

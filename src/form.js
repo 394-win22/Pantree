@@ -13,7 +13,7 @@ export const AddButton = () => (
           ReactDOM.render(<MyForm />, document.getElementById("root"))
         }
       >
-        Click Me
+        Add Food
       </button>
     </>
   );
