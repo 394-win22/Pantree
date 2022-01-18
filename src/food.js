@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { confirm } from "react-confirm-box";
+import { useState } from "react";
 import {deleteFromFirebase} from "./utilities/firebase.js";
 import {
     ItemCard,
@@ -8,12 +9,13 @@ import {
     ItemName,
     PurchaseDate,
     ExpDate,
+    DeleteButton,
   } from "./styles/PantryStyles.js";
 
 import { GetPhoto } from "./utilities/firebaseStorage.js";
 import {App} from "./App";
 import MilkPhoto from "./utilities/milk.png";
-import { FaTimes } from 'react-icons/fa';
+import { FaTimes, FaRegMinusSquare, FaEllipsisV,FaMinus,FaRegTimesCircle} from 'react-icons/fa';
 
 //It is able to get the URL. The problem is making it Async so it can actual be displayed.
 //TODO fix PROMISE<Pending>
@@ -39,16 +41,37 @@ export const FoodList = ({ foods }) => {
     );
   };
 
+const MouseEntered = (isShown) => {
+    if(isShown){
+      return 1
+    }
+    return 2
+  }
+  
+  
+
 const Food = ({ food }) => {
+  const [isShown, setIsShown] = useState(false);
+  const c = 1
+  const options = ['delete','save'];
+  const defaultOption = options[0];
     return(
-      <ItemCard onClick={() => deleteButton({ food })}>
+      <ItemCard 
+          onClick={() => deleteButton({ food })}
+          onMouseEnter={() => {setIsShown(true)}}
+          onMouseLeave={() => {setIsShown(false)}}
+          bg = {MouseEntered(isShown)}
+        >
+       <DeleteButton>
+          <FaTimes size={10}
+                style={{ color: 'black', float: 'right', cursor: 'pointer' }}
+                onClick={() => {
+                  deleteButton(food);
+                  }
+                }/>
+        </DeleteButton>
         <ItemImg src={MilkPhoto} />
-        <ItemName >{food.name} {' '}
-            <FaTimes
-              style={{ color: 'red', float: 'right', cursor: 'pointer' }}
-              onClick={() => deleteButton(food)}
-            />
-        </ItemName>
+        <ItemName >{food.name} {' '}</ItemName>
         <PurchaseDate >{food.buyDate}</PurchaseDate>
         <ExpDate color={Expired(food.expDate)}>
           {food.expDate}
@@ -57,7 +80,9 @@ const Food = ({ food }) => {
      )
   };
 
+
   const deleteButton = async ({ food }) => {
+    
     const result = await confirm("Are you sure?");
     if (result) {
       deleteFromFirebase(food);
