@@ -39,21 +39,30 @@ export const Content = styled.div`
     `
 
 export const ItemCard = styled.div`
-        display: grid;
-        width: 100%;
-        max-width: 500px;
-        height: 134px;
-        background: #FFFFFF;
-        box-shadow: 4px 4px 10px 5px rgba(57, 57, 57, 0.1);
-        border-radius: 15px;
-        margin-bottom: 27px;
-        grid-template-columns: 38% 62%;
-        grid-template-rows: 46% 19% 20%;
-        grid-template-areas: 
-            'img item-name '
-            'img purchase-date'
-            'img exp-date';
-    `
+    display: grid;
+    width: 100%;
+    max-width: 500px;
+    height: 134px;
+    
+    box-shadow: 4px 4px 10px 5px rgba(57, 57, 57, 0.1);
+    border-radius: 15px;
+    margin-bottom: 27px;
+    grid-template-columns: 38% 62%;
+    grid-template-rows: 46% 19% 20%;
+    grid-template-areas: 
+        'img item-name'
+        'img purchase-date '
+        'img exp-date ';
+    background: ${({ bg }) => handleBGcolor(bg)};
+`
+const handleBGcolor = bg => {
+    switch (bg) {
+      case 1: // on mouse enter
+        return "#e9ffdb";
+      case 2: // on mouse leave
+        return "#FFFFFF";
+    }
+  };
 
 export const ItemImg = styled.img`
         display: flex;
@@ -79,6 +88,16 @@ export const ItemName = styled.p`
         color: red;
       `}
     `
+
+export const DeleteButton = styled.p`
+    grid-area: item-name; 
+    font-family: Quicksand;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    color: #989898;
+    align-self: center;
+`
 
 export const PurchaseDate = styled.p`
         grid-area: purchase-date; 
