@@ -84,7 +84,7 @@ const Food = ({ food }) => {
     const result = await confirm("Are you sure?");
     if (result) {
       deleteFromFirebase(food);
-      alert("Item Delection Done!");
+      alert("Item Deletion Done!");
       ReactDOM.render(<App />, document.getElementById("root"));
       return;
     }
