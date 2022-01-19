@@ -57,18 +57,12 @@ const Food = ({ food }) => {
   const defaultOption = options[0];
     return(
       <ItemCard 
-          onClick={() => deleteButton({ food })}
           onMouseEnter={() => {setIsShown(true)}}
           onMouseLeave={() => {setIsShown(false)}}
           bg = {MouseEntered(isShown)}
         >
-       <DeleteButton>
-          <FaTimes size={10}
-                style={{ color: 'black', float: 'right', cursor: 'pointer' }}
-                onClick={() => {
-                  deleteButton(food);
-                  }
-                }/>
+       <DeleteButton onClick={() => deleteButton({ food })}>
+          <FaTimes size={25} style={{ color: isShown ? 'gray' : 'white', float: 'right', cursor: 'pointer' }}/>
         </DeleteButton>
         <ItemImg src={MilkPhoto} />
         <ItemName >{food.name} {' '}</ItemName>

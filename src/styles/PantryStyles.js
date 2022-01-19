@@ -61,6 +61,8 @@ const handleBGcolor = bg => {
         return "#e9ffdb";
       case 2: // on mouse leave
         return "#FFFFFF";
+      default:
+        return "#FFFFFF"
     }
   };
 
@@ -126,5 +128,8 @@ const handleColorType = color => {
         return "#ffa500";
       case 0: //expired
         return "#ff0000";
+        
+      default:
+        return "#989898"
     }
   };
