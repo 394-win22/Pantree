@@ -74,6 +74,8 @@ export const ItemImg = styled.img`
         align-self: center;
         justify-self: center;
         margin-top: 20px;
+        width: 50px;
+        height: 50px;
     `
 
 export const ItemName = styled.p`
