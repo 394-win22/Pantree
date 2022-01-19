@@ -31,8 +31,9 @@ export const App = () => {
         </Header>
         <Content>
           <FoodList foods={groceryy.foods} />
-          <AddButton />
         </Content>
+        <AddButton />
+
       </MainLayout>
     </>
   );

@@ -27,6 +27,11 @@ console.log(Milk);
 // TODO: Find a way to sort the foods
 
 export const FoodList = ({ foods }) => {
+
+    if(!foods){
+      return "";
+    }
+
     const sortedFoods = Object.values(foods).sort((a, b) => {
       return new Date(a.expDate).getTime() - new Date(b.expDate).getTime();
     });
@@ -73,7 +78,6 @@ const Food = ({ food }) => {
       </ItemCard>
      )
   };
-
 
   const deleteButton = async ({ food }) => {
     
