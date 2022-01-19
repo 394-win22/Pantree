@@ -1,6 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { useState, useEffect } from 'react';
-import { getStorage, ref, getDownloadURL, onValue } from "firebase/storage";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 
 const firebaseConfig = {

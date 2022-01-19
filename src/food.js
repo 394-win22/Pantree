@@ -15,7 +15,7 @@ import {
 import { GetPhoto } from "./utilities/firebaseStorage.js";
 import {App} from "./App";
 import MilkPhoto from "./utilities/milk.png";
-import { FaTimes, FaRegMinusSquare, FaEllipsisV,FaMinus,FaRegTimesCircle} from 'react-icons/fa';
+import { FaTimes } from 'react-icons/fa';
 
 //It is able to get the URL. The problem is making it Async so it can actual be displayed.
 //TODO fix PROMISE<Pending>
@@ -52,9 +52,6 @@ const MouseEntered = (isShown) => {
 
 const Food = ({ food }) => {
   const [isShown, setIsShown] = useState(false);
-  const c = 1
-  const options = ['delete','save'];
-  const defaultOption = options[0];
     return(
       <ItemCard 
           onMouseEnter={() => {setIsShown(true)}}
