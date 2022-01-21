@@ -120,6 +120,7 @@ const update = ({ name, buyDate, expDate }) => {
     pushToFirebase(newFood);
   };
   
+  
   const back = () => {
     ReactDOM.render(<App />, document.getElementById("root"));
   };
