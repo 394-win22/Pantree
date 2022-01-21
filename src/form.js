@@ -24,10 +24,19 @@ export const AddButton = () => (
     const [name, setName] = useState("");
     const [buyDate, setbuyDate] = useState(today);
     const [expDate, setexpDate] = useState(today);
-  
+    const [textarea, setTextarea] = useState(
+      "Please add a food item."
+    );
+
+    function stateChange() {
+      setTimeout(function () {
+        setTextarea("Please add the next item.")
+      }, 3000);
+  }
+
     const onSubmit = (e) => {
       e.preventDefault();
-  
+
       if (!name || !buyDate || !expDate) {
         alert("Please add a all Food Item data");
         return;
@@ -39,10 +48,17 @@ export const AddButton = () => (
       }
   
       update({ name, buyDate, expDate });
+
+      if (name != "") {
+        setTextarea("Item added!")
+      }
   
       setName("");
-      setbuyDate("");
-      setexpDate("");
+      setbuyDate(today);
+      setexpDate(today);
+      // wait several seconds and set "item added" back to "please add"
+      stateChange() 
+      
     };
   
     return (
@@ -80,8 +96,10 @@ export const AddButton = () => (
               value={expDate}
               onChange={(e) => setexpDate(e.target.value)}
             />
+          </div> 
+          <div className="form-control">
+            <textarea value={textarea}  />
           </div>
-  
           <input type="submit" value="Add item" className="btn btn-block" />
           <input type="submit" value="Back" className="btn" onClick={back} />
         </form>
