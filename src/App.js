@@ -53,7 +53,8 @@ export const App = () => {
           {user? <SignOutButton cuser={user.email}/>: ""}
         </Header>
         <Content>
-          {user? <FoodList foods={userKitchen.foods} /> :<SignInButton />}
+          {!user? <SignInButton /> : ""}
+          {userKitchen ? <FoodList foods={userKitchen.foods} /> : ""}
           {user? <AddButton />: ""}
         </Content>
       </MainLayout>
