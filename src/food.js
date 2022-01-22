@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { confirm } from "react-confirm-box";
 import { useState } from "react";
-import {deleteFromFirebase} from "./utilities/firebase.js";
+import {deleteFromFirebase, useUserState} from "./utilities/firebase.js";
 import {
     ItemCard,
     ItemImg,
@@ -57,6 +57,7 @@ const MouseEntered = (isShown) => {
 
 const Food = ({ food }) => {
   const [isShown, setIsShown] = useState(false);
+  const user = useUserState();
   const c = 1
   const options = ['delete','save'];
   const defaultOption = options[0];
@@ -66,7 +67,7 @@ const Food = ({ food }) => {
           onMouseLeave={() => {setIsShown(false)}}
           bg = {MouseEntered(isShown)}
         >
-       <DeleteButton onClick={() => deleteButton({ food })}>
+       <DeleteButton onClick={() => deleteButton({ food , user})}>
           <FaTimes size={25} style={{ color: isShown ? 'gray' : 'white', float: 'right', cursor: 'pointer' }}/>
         </DeleteButton>
         <ItemImg src={MilkPhoto}/>
@@ -79,11 +80,11 @@ const Food = ({ food }) => {
      )
   };
 
-  const deleteButton = async ({ food }) => {
+  const deleteButton = async ({ food, user }) => {
     
     const result = await confirm("Are you sure?");
     if (result) {
-      deleteFromFirebase(food);
+      deleteFromFirebase(food, user);
       alert("Item Deletion Done!");
       ReactDOM.render(<App />, document.getElementById("root"));
       return;

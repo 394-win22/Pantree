@@ -17,6 +17,7 @@ export const Header = styled.div`
         height: 12%;
         flex-direction: column;
         align-items: left;
+        margin-bottom: 20px;
         justify-content: center;
     `
 export const H1 = styled.p`
@@ -25,6 +26,7 @@ export const H1 = styled.p`
         font-weight: 900;
         font-size: 32px;
         line-height: 38px;
+        margin-top: 50px;
         color: #000000;
     `
 
@@ -35,6 +37,7 @@ export const Content = styled.div`
         justify-content: top;
         width: 100%;
         height: 88%;
+        margin-top: 10%;
         overflow-y: auto;
     `
 

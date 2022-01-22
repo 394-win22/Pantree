@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getDatabase, onValue, ref, set } from 'firebase/database';
 import { useState, useEffect } from 'react';
+import { getAuth, GoogleAuthProvider, onIdTokenChanged, signInWithPopup, signOut } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: "AIzaSyA7Ww6tN1P-d1MEnuJUetYtQ3pmPwz91Cc",
@@ -46,23 +47,42 @@ export const useData = (path, transform) => {
     set(ref(database, path), value)
   );
 
-  export const deleteFromFirebase = async (foodie) => {
+  export const deleteFromFirebase = async (foodie, user) => {
     if (foodie) {
       try {
-        await setData(`/foods/${foodie.id}/`, null);
+        await setData(`users/${user.uid}/foods/${foodie.id}/`, null);
       } catch (error) {
         alert(error);
       }
     }
   };
 
-  export const pushToFirebase = async (foodie) => {
+  export const pushToFirebase = async (foodie, user) => {
     if (foodie) {
       try {
-        await setData(`/foods/${foodie.id}/`, foodie);
+        await setData(`users/${user.uid}/foods/${foodie.id}/`, foodie);
       } catch (error) {
         alert(error);
       }
     }
   };
   
+
+  export const useUserState = () => {
+    const [user, setUser] = useState();
+  
+    useEffect(() => {
+      onIdTokenChanged(getAuth(firebase), setUser);
+    }, []);
+    if(user){
+      console.log(user.email)
+    }    
+    return user;
+  };
+  
+  export const signInWithG = () => {
+    signInWithPopup(getAuth(firebase), new GoogleAuthProvider());
+  };
+
+  export const signOutOfG = () => signOut(getAuth(firebase));
+

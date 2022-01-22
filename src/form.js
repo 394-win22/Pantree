@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { useState } from "react";
-import {pushToFirebase} from "./utilities/firebase.js";
+import {pushToFirebase, useUserState} from "./utilities/firebase.js";
 import {App} from "./App";
 
 export const AddButton = () => (
@@ -27,6 +27,8 @@ export const AddButton = () => (
     const [textarea, setTextarea] = useState(
       "Please add a food item."
     );
+    const user = useUserState();
+
 
     function stateChange() {
       setTimeout(function () {
@@ -47,7 +49,7 @@ export const AddButton = () => (
         return;
       }
   
-      update({ name, buyDate, expDate });
+      update({ name, buyDate, expDate, user});
 
       if (name != "") {
         setTextarea("Item added!")
@@ -98,7 +100,7 @@ export const AddButton = () => (
             />
           </div> 
           <div className="form-control">
-            <textarea value={textarea}  />
+            <textarea value={textarea} onChange={()=> setTextarea()}  />
           </div>
           <input type="submit" value="Add item" className="btn btn-block" />
           <input type="submit" value="Back" className="btn" onClick={back} />
@@ -108,16 +110,16 @@ export const AddButton = () => (
   };
 
   //Update the state with new items and
-const update = ({ name, buyDate, expDate }) => {
+const update = ({ name, buyDate, expDate, user }) => {
     const namex = {
       name: name,
       buyDate: buyDate,
       expDate: expDate,
     };
   
-    const id = Math.round(Math.random() * 10000);
+    const id = Math.round(Math.random() * 100000);
     const newFood = { id, ...namex };
-    pushToFirebase(newFood);
+    pushToFirebase(newFood, user);
   };
   
   const back = () => {
