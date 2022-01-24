@@ -8,6 +8,7 @@ import {
   Header,
   H1,
   Content,
+  UserName,
 } from "./styles/PantryStyles.js";
 import { isCompositeComponent } from "react-dom/cjs/react-dom-test-utils.production.min";
 
@@ -50,8 +51,12 @@ export const App = () => {
       <MainLayout>
         <Header>
           <H1>My Kitchen</H1>
+          <div className="signInBtn">
           {user? <SignOutButton cuser={user.email}/>: ""}
+        </div>
+          
         </Header>
+
         <Content>
           {!user? <SignInButton /> : ""}
           {userKitchen ? <FoodList foods={userKitchen.foods} /> : ""}

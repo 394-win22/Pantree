@@ -20,6 +20,7 @@ export const Header = styled.div`
         margin-bottom: 20px;
         justify-content: center;
     `
+
 export const H1 = styled.p`
         font-family: Raleway;
         font-style: italic;
@@ -138,3 +139,4 @@ const handleColorType = color => {
         return "#989898"
     }
   };
+
