@@ -16,6 +16,7 @@ import { GetPhoto } from "./utilities/firebaseStorage.js";
 import {App} from "./App";
 import MilkPhoto from "./components/food.png";
 import { FaTimes, FaRegMinusSquare, FaEllipsisV,FaMinus,FaRegTimesCircle} from 'react-icons/fa';
+import {EditMyForm} from "./form.js"
 
 //It is able to get the URL. The problem is making it Async so it can actual be displayed.
 //TODO fix PROMISE<Pending>
@@ -66,9 +67,10 @@ const Food = ({ food }) => {
           onMouseEnter={() => {setIsShown(true)}}
           onMouseLeave={() => {setIsShown(false)}}
           bg = {MouseEntered(isShown)}
+          onDoubleClick={() => EditButton({ food , user})}
         >
        <DeleteButton onClick={() => deleteButton({ food , user})}>
-          <FaTimes size={25} style={{ color: isShown ? 'gray' : 'white', float: 'right', cursor: 'pointer' }}/>
+          <FaTimes size={40} style={{ color: isShown ? 'gray' : 'gray', float: 'right', cursor: 'pointer' }}/>
         </DeleteButton>
         <ItemImg src={MilkPhoto}/>
         <ItemName >{food.name} {' '}</ItemName>
@@ -89,6 +91,17 @@ const Food = ({ food }) => {
       ReactDOM.render(<App />, document.getElementById("root"));
       return;
     }
+  };
+
+  const EditButton = async ({food, user}) => {
+    const result = await confirm("Edit Food?");
+    if(result)
+    {
+      deleteFromFirebase(food, user);
+      ReactDOM.render(<EditMyForm date = {food.buyDate} exp = {food.expDate} n = {food.name}/>, document.getElementById("root"));
+    }
+    return;
+
   };
 
   // return different numbers depending on expiration status
