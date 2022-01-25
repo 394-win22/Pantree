@@ -78,7 +78,7 @@ const Food = ({ food }) => {
        <DeleteButton onClick={() => deleteButton({ food , user})}>
           <FaTimes size={30} style={{ color: isShown ? 'gray' : 'gray', float: 'right', cursor: 'pointer' }}/>
         </DeleteButton>
-        <ItemImg src={MilkPhoto}/>
+        <ItemImg src={food.icon}/>
         <ItemName >{food.name} {' '}</ItemName>
         <PurchaseDate >{food.buyDate}</PurchaseDate>
         <ExpDate color={Expired(food.expDate)}>
