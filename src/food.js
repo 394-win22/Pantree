@@ -70,7 +70,7 @@ const Food = ({ food }) => {
           onDoubleClick={() => EditButton({ food , user})}
         >
        <DeleteButton onClick={() => deleteButton({ food , user})}>
-          <FaTimes size={40} style={{ color: isShown ? 'gray' : 'gray', float: 'right', cursor: 'pointer' }}/>
+          <FaTimes size={30} style={{ color: isShown ? 'gray' : 'gray', float: 'right', cursor: 'pointer' }}/>
         </DeleteButton>
         <ItemImg src={MilkPhoto}/>
         <ItemName >{food.name} {' '}</ItemName>
