@@ -4,6 +4,8 @@ import { useState } from "react";
 import { pushToFirebase, useUserState } from "./utilities/firebase.js";
 import { App } from "./App";
 import { MySelection, Food2url } from "./select.js";
+import { isDisabled } from "@testing-library/user-event/dist/utils";
+import { FaArrowCircleLeft } from "react-icons/fa";
 
 export const AddButton = () => (
   <>
@@ -68,8 +70,9 @@ const MyForm = (param) => {
   return (
     <div className="container">
       <form className="add-form" onSubmit={onSubmit}>
+      <div><FaArrowCircleLeft onClick ={() => back()} size={40} style={{ color: 'rgb(121, 148, 25)', cursor: 'pointer' }}/> </div>
         <div className="form-control">
-          <label>Name</label>
+          <label>Food Name</label>
           <input
             type="text"
             placeholder="Add Food"
@@ -104,11 +107,9 @@ const MyForm = (param) => {
         <div>
           <MySelection icon={icon} setIcon={setIcon} />
         </div>
-        <div className="form-control">
-          <textarea value={textarea} onChange={() => setTextarea()} />
-        </div>
+        
         <input type="submit" value="Add item" className="btn btn-block" />
-        <input type="submit" value="Back" className="btn" onClick={back} />
+        
       </form>
     </div>
   );
@@ -177,13 +178,11 @@ export const EditMyForm = (param) => {
     back();
   };
 
-  console.log(Editing);
-
   return (
     <div className="container">
       <form className="add-form" onSubmit={onSubmit}>
         <div className="form-control">
-          <label>Name</label>
+          <label>Food Name</label>
           <input
             type="text"
             placeholder="Add Food"
@@ -215,9 +214,7 @@ export const EditMyForm = (param) => {
             onChange={(e) => setexpDate(e.target.value)}
           />
         </div>
-        <div className="form-control">
-          <textarea value={textarea} onChange={() => setTextarea()} />
-        </div>
+        
         <input type="submit" value="Finish Editing" className="btn btn-block" />
       </form>
     </div>
