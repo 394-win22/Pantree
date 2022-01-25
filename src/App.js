@@ -11,7 +11,8 @@ import {
   UserName,
 } from "./styles/PantryStyles.js";
 import { isCompositeComponent } from "react-dom/cjs/react-dom-test-utils.production.min";
-
+import { ToastContainer, toast, Slide } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SignInButton = () => (
   <button className="btn"
@@ -44,10 +45,11 @@ export const App = () => {
 
   const [userKitchen, loading, error] = useData(currUser(user));
   if (error) return <h1>{error}</h1>;
-  if (loading) return <h1>Loading the schedule...</h1>;
+  if (loading) return <h1>Loading the data...</h1>;
 
   return (
     <>
+      <ToastContainer transition={Slide}/>
       <MainLayout>
         <Header>
           <H1>My Kitchen</H1>

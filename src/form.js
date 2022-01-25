@@ -6,6 +6,8 @@ import { App } from "./App";
 import { MySelection, Food2url } from "./select.js";
 import { isDisabled } from "@testing-library/user-event/dist/utils";
 import { FaArrowCircleLeft } from "react-icons/fa";
+import { ToastContainer, toast, Slide } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const AddButton = () => (
   <>
@@ -45,32 +47,32 @@ const MyForm = (param) => {
     e.preventDefault();
 
     if (!name || !buyDate || !expDate) {
-      alert("Please add a all Food Item data");
+      Notification('info');
       return;
     }
 
     if (new Date(expDate).getTime() - new Date(buyDate).getTime() < 0) {
-      alert("Please make sure the expiration date after the buy date");
+      Notification('date');
       return;
     }
 
     update({ icon, name, buyDate, expDate, user });
 
     if (name != "") {
-      setTextarea("Item added!");
+      Notification('add');
     }
 
     setName("");
     setbuyDate(today);
     setexpDate(today);
-    // wait several seconds and set "item added" back to "please add"
     stateChange();
   };
 
   return (
     <div className="container">
+      <ToastContainer transition={Slide} />
       <form className="add-form" onSubmit={onSubmit}>
-      <div><FaArrowCircleLeft onClick ={() => back()} size={40} style={{ color: 'rgb(121, 148, 25)', cursor: 'pointer' }}/> </div>
+        <div><FaArrowCircleLeft onClick={() => back()} size={40} style={{ color: 'rgb(121, 148, 25)', cursor: 'pointer' }} /> </div>
         <div className="form-control">
           <label>Food Name</label>
           <input
@@ -107,9 +109,9 @@ const MyForm = (param) => {
         <div>
           <MySelection icon={icon} setIcon={setIcon} />
         </div>
-        
+
         <input type="submit" value="Add item" className="btn btn-block" />
-        
+
       </form>
     </div>
   );
@@ -154,19 +156,18 @@ export const EditMyForm = (param) => {
     e.preventDefault();
 
     if (!name || !buyDate || !expDate) {
-      alert("Please add a all Food Item data");
+      Notification('info');
       return;
     }
 
     if (new Date(expDate).getTime() - new Date(buyDate).getTime() < 0) {
-      alert("Please make sure the expiration date after the buy date");
+      Notification('date');
       return;
     }
 
     update({ icon, name, buyDate, expDate, user });
 
     if (name != "") {
-      setTextarea("Item added!");
     }
 
     setName("");
@@ -214,7 +215,7 @@ export const EditMyForm = (param) => {
             onChange={(e) => setexpDate(e.target.value)}
           />
         </div>
-        
+
         <input type="submit" value="Finish Editing" className="btn btn-block" />
       </form>
     </div>
@@ -239,3 +240,73 @@ const update = ({ icon, name, buyDate, expDate, user }) => {
 const back = () => {
   ReactDOM.render(<App />, document.getElementById("root"));
 };
+
+export const Notification = (type) => {
+  switch (type) {
+    case 'add':
+      toast.success('Item added!', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "colored"
+      }
+      );
+      break;
+    case 'edit':
+      toast.success('Item edited!', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "white"
+      }
+      );
+      break;
+    case 'del':
+      toast.success('Item deleted!', {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "colored"
+      }
+      );
+      break;
+    case 'info':
+      toast.warn('Please complete all the information!', {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "colored"
+      }
+      );
+      break;
+    case 'date':
+      toast.error('Expire date should be after purchase date!', {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "colored"
+      }
+      );
+      break;
+  }
+}

@@ -42,12 +42,12 @@ body {
 }
 
 .email{
-  color: rgb(136, 160, 27);
+  color: rgb(121, 148, 25);
   /* margin-left: 15%; */
 }
 .btn:hover{
   font-size: 17px;
-  color: orange;
+  color: #fff;
 }
 
 #out{
@@ -64,7 +64,7 @@ body {
 .btn-block {
   display: block;
   width: 100%;
-  color: orange
+  color: #fff
 }
 
 .add-form {
