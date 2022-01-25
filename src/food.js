@@ -17,6 +17,7 @@ import { GetPhoto } from "./utilities/firebaseStorage.js";
 import { App } from "./App";
 import MilkPhoto from "./components/food.png";
 import {
+  FaEdit,
   FaTimes,
   FaRegMinusSquare,
   FaEllipsisV,
@@ -106,18 +107,6 @@ const Food = ({ food }) => {
     }
     return;
   };
-
-const EditButton = async ({ food, user }) => {
-  const result = await confirm("Edit Food?");
-  if (result) {
-    deleteFromFirebase(food, user);
-    ReactDOM.render(
-      <EditMyForm date={food.buyDate} exp={food.expDate} n={food.name} />,
-      document.getElementById("root")
-    );
-  }
-  return;
-};
 
 // return different numbers depending on expiration status
 const Expired = (a) => {
