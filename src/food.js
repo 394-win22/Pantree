@@ -10,12 +10,13 @@ import {
     PurchaseDate,
     ExpDate,
     DeleteButton,
+    EditButton,
   } from "./styles/PantryStyles.js";
 
 import { GetPhoto } from "./utilities/firebaseStorage.js";
 import {App} from "./App";
 import MilkPhoto from "./components/food.png";
-import { FaTimes, FaRegMinusSquare, FaEllipsisV,FaMinus,FaRegTimesCircle} from 'react-icons/fa';
+import { FaEdit, FaTimes, FaRegMinusSquare, FaEllipsisV,FaMinus,FaRegTimesCircle} from 'react-icons/fa';
 import {EditMyForm} from "./form.js"
 
 //It is able to get the URL. The problem is making it Async so it can actual be displayed.
@@ -67,8 +68,10 @@ const Food = ({ food }) => {
           onMouseEnter={() => {setIsShown(true)}}
           onMouseLeave={() => {setIsShown(false)}}
           bg = {MouseEntered(isShown)}
-          onDoubleClick={() => EditButton({ food , user})}
         >
+       <EditButton onClick={() => editButton({ food , user})}>
+          <FaEdit size={26} style={{ color: isShown ? 'gray' : 'gray', float: 'right', cursor: 'pointer' }}/>
+        </EditButton>
        <DeleteButton onClick={() => deleteButton({ food , user})}>
           <FaTimes size={30} style={{ color: isShown ? 'gray' : 'gray', float: 'right', cursor: 'pointer' }}/>
         </DeleteButton>
@@ -84,16 +87,15 @@ const Food = ({ food }) => {
 
   const deleteButton = async ({ food, user }) => {
     
-    const result = await confirm("Are you sure?");
+    const result = await confirm("Do you want to delete this item?");
     if (result) {
       deleteFromFirebase(food, user);
-      alert("Item Deletion Done!");
       ReactDOM.render(<App />, document.getElementById("root"));
       return;
     }
   };
 
-  const EditButton = async ({food, user}) => {
+  const editButton = async ({food, user}) => {
     const result = await confirm("Edit Food?");
     if(result)
     {
