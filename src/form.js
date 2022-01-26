@@ -81,9 +81,10 @@ const MyForm = (param) => {
             value={name}
             onChange={(e) =>
               setName(
-                e.target.value.length > 10
-                  ? e.target.value.slice(0, 10) + "..."
-                  : e.target.value
+                e.target.value
+                // e.target.value.length > 20
+                //   ? e.target.value.slice(0, 20) + "..."
+                //   : e.target.value
               )
             }
           />
@@ -189,8 +190,8 @@ export const EditMyForm = (param) => {
             value={name}
             onChange={(e) =>
               setName(
-                e.target.value.length > 10
-                  ? e.target.value.slice(0, 10) + "..."
+                e.target.value.length > 21
+                  ? e.target.value.slice(0, 20) + "..."
                   : e.target.value
               )
             }

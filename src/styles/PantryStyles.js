@@ -42,23 +42,29 @@ export const Content = styled.div`
         overflow-y: auto;
     `
 
+
+    //height 134
 export const ItemCard = styled.div`
     display: grid;
     width: 100%;
-    max-width: 500px;
-    height: 134px;
+    max-width: 600px;
+    min-height: 130px;
+    overflow: hidden;
     
     box-shadow: 4px 4px 10px 5px rgba(57, 57, 57, 0.1);
     border-radius: 15px;
     margin-bottom: 27px;
+    
     grid-template-columns: 38% 42% 20%;
-    grid-template-rows: 46% 19% 35%;
+    grid-template-rows: 60% 12% 28%;
     grid-template-areas: 
         'img item-name delete'
         'img purchase-date purchase-date'
         'img exp-date edit';
     background: ${({ bg }) => handleBGcolor(bg)};
 `
+//grid-template-rows: 56% 19% 35%;
+
 const handleBGcolor = bg => {
     switch (bg) {
       case 1: // on mouse enter
@@ -104,7 +110,7 @@ export const DeleteButton = styled.p`
     font-weight: 500;
     font-size: 14px;
     color: #989898;
-    align-self: center;
+    align-self: top;
     padding: 8px;
     padding-top: 15px;
 `
@@ -116,7 +122,7 @@ export const EditButton = styled.p`
     font-weight: 500;
     font-size: 14px;
     color: #989898;
-    align-self: center;
+    align-self: top;
     padding: 8px;
 `
 

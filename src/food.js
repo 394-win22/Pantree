@@ -78,7 +78,11 @@ const Food = ({ food }) => {
           <FaTimes size={30} style={{ color: isShown ? 'gray' : 'gray', float: 'right', cursor: 'pointer' }}/>
         </DeleteButton>
         <ItemImg src={food.icon}/>
-        <ItemName >{food.name} {' '}</ItemName>
+        <ItemName >{
+            food.name.length > 10 ?
+            food.name.substring(0,10)+"..." :
+            food.name
+            } {' '}</ItemName>
         <PurchaseDate >{food.buyDate}</PurchaseDate>
         <ExpDate color={Expired(food.expDate)}>
           {food.expDate}
