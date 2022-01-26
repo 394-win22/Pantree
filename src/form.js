@@ -8,7 +8,7 @@ import { isDisabled } from "@testing-library/user-event/dist/utils";
 import { FaArrowCircleLeft } from "react-icons/fa";
 import { ToastContainer, toast, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import './form.css'
 export const AddButton = () => (
   <>
     <button
@@ -47,19 +47,19 @@ const MyForm = (param) => {
     e.preventDefault();
 
     if (!name || !buyDate || !expDate) {
-      Notification('info');
+      notification('info');
       return;
     }
 
     if (new Date(expDate).getTime() - new Date(buyDate).getTime() < 0) {
-      Notification('date');
+      notification('date');
       return;
     }
 
     update({ icon, name, buyDate, expDate, user });
 
     if (name != "") {
-      Notification('add');
+      notification('add');
     }
 
     setName("");
@@ -143,7 +143,6 @@ export const EditMyForm = (param) => {
   const [expDate, setexpDate] = useState(experation);
   const [icon, setIcon] = useState("");
   const [textarea, setTextarea] = useState("Please add a food item.");
-
   const user = useUserState();
 
   function stateChange() {
@@ -156,12 +155,12 @@ export const EditMyForm = (param) => {
     e.preventDefault();
 
     if (!name || !buyDate || !expDate) {
-      Notification('info');
+      notification('info');
       return;
     }
 
     if (new Date(expDate).getTime() - new Date(buyDate).getTime() < 0) {
-      Notification('date');
+      notification('date');
       return;
     }
 
@@ -237,11 +236,12 @@ const update = ({ icon, name, buyDate, expDate, user }) => {
   pushToFirebase(newFood, user);
 };
 
+
 const back = () => {
   ReactDOM.render(<App />, document.getElementById("root"));
 };
 
-export const Notification = (type) => {
+export const notification = (type) => {
   switch (type) {
     case 'add':
       toast.success('Item added!', {
@@ -264,8 +264,9 @@ export const Notification = (type) => {
         closeOnClick: true,
         pauseOnHover: true,
         draggable: false,
+        delay: 500,
         progress: undefined,
-        theme: "white"
+        theme: "colored"
       }
       );
       break;

@@ -23,7 +23,7 @@ import {
   FaMinus,
   FaRegTimesCircle,
 } from "react-icons/fa";
-import { EditMyForm, Notification } from "./form.js";
+import { EditMyForm, notification } from "./form.js";
 
 //It is able to get the URL. The problem is making it Async so it can actual be displayed.
 //TODO fix PROMISE<Pending>
@@ -92,7 +92,7 @@ const Food = ({ food }) => {
     const result = await confirm("Do you want to delete this item?");
     if (result) {
       deleteFromFirebase(food, user);
-      Notification('del');
+      notification('del');
       ReactDOM.render(<App />, document.getElementById("root"));
       return;
     }
@@ -103,7 +103,6 @@ const Food = ({ food }) => {
     if(result)
     {
       deleteFromFirebase(food, user);
-      //Notification('edit');
       ReactDOM.render(<EditMyForm date = {food.buyDate} exp = {food.expDate} n = {food.name}/>, document.getElementById("root"));
     }
     return;
