@@ -4,7 +4,6 @@ import { useState } from "react";
 import { pushToFirebase, useUserState } from "./utilities/firebase.js";
 import { App } from "./App";
 import { MySelection, Food2url } from "./select.js";
-import { isDisabled } from "@testing-library/user-event/dist/utils";
 import { FaArrowCircleLeft } from "react-icons/fa";
 import { ToastContainer, toast, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -141,8 +140,8 @@ export const EditMyForm = (param) => {
   const [name, setName] = useState(na);
   const [buyDate, setbuyDate] = useState(today);
   const [expDate, setexpDate] = useState(experation);
-  const [icon, setIcon] = useState("");
-  const [textarea, setTextarea] = useState("Please add a food item.");
+  const [icon, seticon] = useState("");
+  const [Textarea, setTextarea] = useState("Please add a food item.");
 
   const user = useUserState();
 
@@ -217,6 +216,7 @@ export const EditMyForm = (param) => {
         </div>
 
         <input type="submit" value="Finish Editing" className="btn btn-block" />
+        <div className= "btn2 btn-block" onClick={() => back() }> DELETE </div>
       </form>
     </div>
   );
