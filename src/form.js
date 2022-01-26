@@ -98,10 +98,10 @@ const MyForm = (param) => {
           />
         </div>
         <div className="form-control">
-          <label>Expire Date</label>
+          <label>Expiration Date</label>
           <input
             type="date"
-            placeholder="Expire Date"
+            placeholder="Expiration Date"
             value={expDate}
             onChange={(e) => setexpDate(e.target.value)}
           />
@@ -206,10 +206,10 @@ export const EditMyForm = (param) => {
           />
         </div>
         <div className="form-control">
-          <label>Expire Date</label>
+          <label>Expiration Date</label>
           <input
             type="date"
-            placeholder="Expire Date"
+            placeholder="Expiration Date"
             value={expDate}
             onChange={(e) => setexpDate(e.target.value)}
           />
@@ -252,7 +252,7 @@ export const notification = (type) => {
         pauseOnHover: true,
         draggable: false,
         progress: undefined,
-        theme: "colored"
+        theme: "colored",
       }
       );
       break;
@@ -297,7 +297,7 @@ export const notification = (type) => {
       );
       break;
     case 'date':
-      toast.error('Expire date should be after purchase date!', {
+      toast.error('Expiration date should be after purchase date!', {
         position: "top-center",
         autoClose: 2000,
         hideProgressBar: true,
