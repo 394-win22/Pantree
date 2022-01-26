@@ -67,6 +67,7 @@ const Food = ({ food }) => {
           onMouseLeave={() => {setIsShown(false)}}
           onClick={() => editButton({ food , user})}
           bg = {MouseEntered(isShown)}
+          style = {{  cursor: 'pointer' }}
         >
         <ItemImg src={food.icon}/>
         <ItemName >{
