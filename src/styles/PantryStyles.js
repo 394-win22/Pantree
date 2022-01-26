@@ -57,7 +57,7 @@ export const ItemCard = styled.div`
         'img item-name delete'
         'img purchase-date purchase-date'
         'img exp-date edit';
-    background: ${({ bg }) => handleBGcolor(bg)};
+    background: ${({ color }) => handleColorType(color)};
 `
 const handleBGcolor = bg => {
     switch (bg) {
@@ -134,22 +134,22 @@ export const ExpDate = styled.p`
     grid-area: exp-date; 
     font-family: Quicksand;
     font-style: normal;
-    font-weight: bold;
+    // font-weight: bold;
     font-size: 14px;
     align-self: top;
-    color: ${({ color }) => handleColorType(color)};
+    color: #989898;
 `
 
 const handleColorType = color => {
     switch (color) {
       case 2: // not gonna expire soon
-        return "#989898";
+        return "#fff";
       case 1: // about to expire
-        return "#ffa500";
+        return "#FFE8B7";
       case 0: //expired
-        return "#ff0000";
+        return "#FFD6C2";
         
       default:
-        return "#989898"
+        return "#fff"
     }
   };

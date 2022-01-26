@@ -62,6 +62,7 @@ const Food = ({ food }) => {
   const user = useUserState();
     return(
       <ItemCard 
+          color={Expired(food.expDate)}
           onMouseEnter={() => {setIsShown(true)}}
           onMouseLeave={() => {setIsShown(false)}}
           onClick={() => editButton({ food , user})}
@@ -74,7 +75,7 @@ const Food = ({ food }) => {
             food.name
             } {' '}</ItemName>
         <PurchaseDate >{food.buyDate}</PurchaseDate>
-        <ExpDate color={Expired(food.expDate)}>
+        <ExpDate>
           {food.expDate}
         </ExpDate> 
       </ItemCard>
