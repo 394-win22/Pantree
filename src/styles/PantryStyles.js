@@ -43,13 +43,13 @@ export const Content = styled.div`
     `
 
 
-    //height 134
+    //min-height: 130px;
+    //overflow: hidden;
 export const ItemCard = styled.div`
     display: grid;
     width: 100%;
     max-width: 600px;
-    min-height: 130px;
-    overflow: hidden;
+    height:134px;
     
     box-shadow: 4px 4px 10px 5px rgba(57, 57, 57, 0.1);
     border-radius: 15px;
