@@ -4,7 +4,7 @@ import { useState } from "react";
 import { pushToFirebase, useUserState } from "./utilities/firebase.js";
 import { App } from "./App";
 import { MySelection, Food2url } from "./select.js";
-import { FaArrowCircleLeft } from "react-icons/fa";
+import { FaTrashAlt, FaArrowCircleLeft } from "react-icons/fa";
 import { ToastContainer, toast, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './form.css'
@@ -216,7 +216,10 @@ export const EditMyForm = (param) => {
         </div>
 
         <input type="submit" value="Finish Editing" className="btn btn-block" />
-        <div className= "btn2 btn-block" onClick={() => back() }> DELETE </div>
+        <br/>
+        <div className="btn2 btn-block">
+        <center><FaTrashAlt onClick={() => back()} size={30} style={{ color: 'white', cursor: 'pointer' }} /></center>
+        </div>
       </form>
     </div>
   );
