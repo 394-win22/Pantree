@@ -15,7 +15,15 @@ import {
 
 import { GetPhoto } from "./utilities/firebaseStorage.js";
 import { App } from "./App";
-import { EditMyForm, Notification } from "./form.js";
+import {
+  FaEdit,
+  FaTimes,
+  FaRegMinusSquare,
+  FaEllipsisV,
+  FaMinus,
+  FaRegTimesCircle,
+} from "react-icons/fa";
+import { EditMyForm, notification } from "./form.js";
 
 let Milk = GetPhoto("milk.png");
 
@@ -60,7 +68,11 @@ const Food = ({ food }) => {
           bg = {MouseEntered(isShown)}
         >
         <ItemImg src={food.icon}/>
-        <ItemName >{food.name} {' '}</ItemName>
+        <ItemName >{
+            food.name.length > 10 ?
+            food.name.substring(0,10)+"..." :
+            food.name
+            } {' '}</ItemName>
         <PurchaseDate >{food.buyDate}</PurchaseDate>
         <ExpDate color={Expired(food.expDate)}>
           {food.expDate}
@@ -74,16 +86,14 @@ const Food = ({ food }) => {
     const result = await confirm("Do you want to delete this item?");
     if (result) {
       deleteFromFirebase(food, user);
-      Notification('del');
+      notification('del');
       ReactDOM.render(<App />, document.getElementById("root"));
       return;
     }
   };
 
   const editButton = async ({food, user}) => {
-    
-    
-    
+
     deleteFromFirebase(food, user);
     //Notification('edit');
     ReactDOM.render(<EditMyForm date = {food.buyDate} exp = {food.expDate} n = {food.name}/>, document.getElementById("root"));

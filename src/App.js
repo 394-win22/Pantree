@@ -14,6 +14,7 @@ import { isCompositeComponent } from "react-dom/cjs/react-dom-test-utils.product
 import { ToastContainer, toast, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+
 const SignInButton = () => (
   <button className="btn"
       onClick={() => signInWithG()}>
@@ -42,7 +43,6 @@ const currUser = (user) =>{
 export const App = () => {
 
   const user = useUserState();
-
   const [userKitchen, loading, error] = useData(currUser(user));
   if (error) return <h1>{error}</h1>;
   if (loading) return <h1>Loading the data...</h1>;

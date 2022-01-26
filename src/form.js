@@ -7,7 +7,7 @@ import { MySelection, Food2url } from "./select.js";
 import { FaArrowCircleLeft } from "react-icons/fa";
 import { ToastContainer, toast, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import './form.css'
 export const AddButton = () => (
   <>
     <button
@@ -46,19 +46,19 @@ const MyForm = (param) => {
     e.preventDefault();
 
     if (!name || !buyDate || !expDate) {
-      Notification('info');
+      notification('info');
       return;
     }
 
     if (new Date(expDate).getTime() - new Date(buyDate).getTime() < 0) {
-      Notification('date');
+      notification('date');
       return;
     }
 
     update({ icon, name, buyDate, expDate, user });
 
     if (name != "") {
-      Notification('add');
+      notification('add');
     }
 
     setName("");
@@ -80,9 +80,10 @@ const MyForm = (param) => {
             value={name}
             onChange={(e) =>
               setName(
-                e.target.value.length > 10
-                  ? e.target.value.slice(0, 10) + "..."
-                  : e.target.value
+                e.target.value
+                // e.target.value.length > 20
+                //   ? e.target.value.slice(0, 20) + "..."
+                //   : e.target.value
               )
             }
           />
@@ -97,10 +98,10 @@ const MyForm = (param) => {
           />
         </div>
         <div className="form-control">
-          <label>Expire Date</label>
+          <label>Expiration Date</label>
           <input
             type="date"
-            placeholder="Expire Date"
+            placeholder="Expiration Date"
             value={expDate}
             onChange={(e) => setexpDate(e.target.value)}
           />
@@ -140,9 +141,8 @@ export const EditMyForm = (param) => {
   const [name, setName] = useState(na);
   const [buyDate, setbuyDate] = useState(today);
   const [expDate, setexpDate] = useState(experation);
-  const [icon, seticon] = useState("");
-  const [Textarea, setTextarea] = useState("Please add a food item.");
-
+  const [icon, setIcon] = useState("");
+  const [textarea, setTextarea] = useState("Please add a food item.");
   const user = useUserState();
 
   function stateChange() {
@@ -155,12 +155,12 @@ export const EditMyForm = (param) => {
     e.preventDefault();
 
     if (!name || !buyDate || !expDate) {
-      Notification('info');
+      notification('info');
       return;
     }
 
     if (new Date(expDate).getTime() - new Date(buyDate).getTime() < 0) {
-      Notification('date');
+      notification('date');
       return;
     }
 
@@ -189,8 +189,8 @@ export const EditMyForm = (param) => {
             value={name}
             onChange={(e) =>
               setName(
-                e.target.value.length > 10
-                  ? e.target.value.slice(0, 10) + "..."
+                e.target.value.length > 21
+                  ? e.target.value.slice(0, 20) + "..."
                   : e.target.value
               )
             }
@@ -206,10 +206,10 @@ export const EditMyForm = (param) => {
           />
         </div>
         <div className="form-control">
-          <label>Expire Date</label>
+          <label>Expiration Date</label>
           <input
             type="date"
-            placeholder="Expire Date"
+            placeholder="Expiration Date"
             value={expDate}
             onChange={(e) => setexpDate(e.target.value)}
           />
@@ -237,11 +237,12 @@ const update = ({ icon, name, buyDate, expDate, user }) => {
   pushToFirebase(newFood, user);
 };
 
+
 const back = () => {
   ReactDOM.render(<App />, document.getElementById("root"));
 };
 
-export const Notification = (type) => {
+export const notification = (type) => {
   switch (type) {
     case 'add':
       toast.success('Item added!', {
@@ -252,7 +253,7 @@ export const Notification = (type) => {
         pauseOnHover: true,
         draggable: false,
         progress: undefined,
-        theme: "colored"
+        theme: "colored",
       }
       );
       break;
@@ -264,8 +265,9 @@ export const Notification = (type) => {
         closeOnClick: true,
         pauseOnHover: true,
         draggable: false,
+        delay: 500,
         progress: undefined,
-        theme: "white"
+        theme: "colored"
       }
       );
       break;
@@ -296,7 +298,7 @@ export const Notification = (type) => {
       );
       break;
     case 'date':
-      toast.error('Expire date should be after purchase date!', {
+      toast.error('Expiration date should be after purchase date!', {
         position: "top-center",
         autoClose: 2000,
         hideProgressBar: true,
