@@ -41,3 +41,14 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(12rem, 17rem));
 }
+
+.signInBtn{
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 5px;
+
+}

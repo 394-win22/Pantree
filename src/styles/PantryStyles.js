@@ -17,14 +17,17 @@ export const Header = styled.div`
         height: 12%;
         flex-direction: column;
         align-items: left;
+        margin-bottom: 20px;
         justify-content: center;
     `
+
 export const H1 = styled.p`
         font-family: Raleway;
         font-style: italic;
         font-weight: 900;
         font-size: 32px;
         line-height: 38px;
+        margin-top: 50px;
         color: #000000;
     `
 
@@ -35,6 +38,7 @@ export const Content = styled.div`
         justify-content: top;
         width: 100%;
         height: 88%;
+        margin-top: 10%;
         overflow-y: auto;
     `
 
@@ -47,12 +51,12 @@ export const ItemCard = styled.div`
     box-shadow: 4px 4px 10px 5px rgba(57, 57, 57, 0.1);
     border-radius: 15px;
     margin-bottom: 27px;
-    grid-template-columns: 38% 62%;
-    grid-template-rows: 46% 19% 20%;
+    grid-template-columns: 38% 42% 20%;
+    grid-template-rows: 46% 19% 35%;
     grid-template-areas: 
-        'img item-name'
-        'img purchase-date '
-        'img exp-date ';
+        'img item-name delete'
+        'img purchase-date purchase-date'
+        'img exp-date edit';
     background: ${({ bg }) => handleBGcolor(bg)};
 `
 const handleBGcolor = bg => {
@@ -74,6 +78,8 @@ export const ItemImg = styled.img`
         align-self: center;
         justify-self: center;
         margin-top: 20px;
+        width: 50px;
+        height: 50px;
     `
 
 export const ItemName = styled.p`
@@ -92,13 +98,26 @@ export const ItemName = styled.p`
     `
 
 export const DeleteButton = styled.p`
-    grid-area: item-name; 
+    grid-area: delete; 
     font-family: Quicksand;
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
     color: #989898;
     align-self: center;
+    padding: 8px;
+    padding-top: 15px;
+`
+
+export const EditButton = styled.p`
+    grid-area: edit; 
+    font-family: Quicksand;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    color: #989898;
+    align-self: center;
+    padding: 8px;
 `
 
 export const PurchaseDate = styled.p`
