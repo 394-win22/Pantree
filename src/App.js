@@ -1,6 +1,6 @@
 import "./App.css";
 import React from "react";
-import { useData, useUserState, signInWithG, signOutOfG} from "./utilities/firebase.js";
+import { useData, useUserState, signInWithG, signOutOfG } from "./utilities/firebase.js";
 import { FoodList } from "./food";
 import { AddButton } from "./form";
 import {
@@ -15,24 +15,27 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const SignInButton = () => (
   <button className="btn"
-      onClick={() => signInWithG()}>
+    onClick={() => signInWithG()}>
     Sign In
   </button>
 );
 
-const SignOutButton = ({cuser}) => (
+const SignOutButton = ({ cuser }) => (
   <>
-  <p className="email">{cuser}</p>
+    <p className="email">
+      {cuser}
+      <button className="btn" id="out"
+        onClick={() => signOutOfG()}>
+        Sign Out
+      </button>
+    </p>
 
-  <button className="btn" id="out"
-      onClick={() => signOutOfG()}>
-    Sign Out
-  </button>
+
   </>
 );
 
-const currUser = (user) =>{
-  if(user){
+const currUser = (user) => {
+  if (user) {
     return "/users/" + user.uid + "/";
   }
   return "/";
@@ -48,25 +51,24 @@ export const App = () => {
 
   return (
     <>
-      <ToastContainer transition={Slide}/>
+      <ToastContainer transition={Slide} />
       <MainLayout>
         <Header>
           <H1>My Kitchen</H1>
           <div className="signInBtn">
-          {user? <SignOutButton cuser={user.email}/>: ""}
-        </div>
-          
-        </Header>
+            {user ? <SignOutButton cuser={user.email} /> : <SignInButton />}
+          </div>
 
+        </Header>
         <Content>
-          {!user? <SignInButton /> : ""}
+          {user ? <AddButton /> : ""}
+          <H1>{!user ? "Sign In To Unlock Your Kitchen" : ""}</H1>
           {userKitchen ? <FoodList foods={userKitchen.foods} /> : ""}
-          {user? <AddButton />: ""}
         </Content>
       </MainLayout>
     </>
   );
-  
+
 };
 
 export default App;

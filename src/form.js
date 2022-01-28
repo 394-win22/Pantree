@@ -217,8 +217,8 @@ export const EditMyForm = (param) => {
 
         <input type="submit" value="Finish Editing" className="btn btn-block" />
         <br/>
-        <div className="btn2 btn-block">
-        <center><FaTrashAlt onClick={() => back()} size={ 20 } style={{ color: 'white', cursor: 'pointer', margin: 4 }} /></center>
+        <div className="btn2 btn-block" onClick={() => back()}>
+        <center><FaTrashAlt size={ 20 } style={{ color: 'white', cursor: 'pointer', margin: 4 }} /></center>
         </div>
       </form>
     </div>

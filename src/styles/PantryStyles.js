@@ -15,7 +15,7 @@ export const Header = styled.div`
         display: flex;
         width: 75%;
         height: 12%;
-        flex-direction: column;
+        flex-direction: row;
         align-items: left;
         margin-bottom: 20px;
         justify-content: center;
@@ -38,14 +38,14 @@ export const Content = styled.div`
         justify-content: top;
         width: 100%;
         height: 88%;
-        margin-top: 10%;
         overflow-y: auto;
     `
 
 export const ItemCard = styled.div`
     display: grid;
     width: 100%;
-    max-width: 500px;
+    max-width: 400px;
+    min-width: 300px;
     height: 160px;
     
     box-shadow: 4px 4px 10px 5px rgba(57, 57, 57, 0.1);
@@ -58,6 +58,7 @@ export const ItemCard = styled.div`
         'img purchase-date purchase-date'
         'img exp-date edit';
     background: ${({ color }) => handleColorType(color)};
+    margin: 2%;
 `
 const handleBGcolor = bg => {
     switch (bg) {
