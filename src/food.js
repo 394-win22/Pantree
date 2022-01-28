@@ -16,6 +16,8 @@ import {
 import { GetPhoto } from "./utilities/firebaseStorage.js";
 import { App } from "./App";
 import {
+  FaCalendar,
+  FaClock,
   FaEdit,
   FaTimes,
   FaRegMinusSquare,
@@ -75,9 +77,9 @@ const Food = ({ food }) => {
             food.name.substring(0,10)+"..." :
             food.name
             } {' '}</ItemName>
-        <PurchaseDate >{food.buyDate}</PurchaseDate>
-        <ExpDate>
-          {food.expDate}
+        
+        <PurchaseDate ><FaCalendar size={16} style={{ color: '#989898'}} />&nbsp;&nbsp;{food.buyDate}</PurchaseDate>
+        <ExpDate><FaClock size={15} style={{ color: '#989898'}} />&nbsp;&nbsp;{food.expDate}
         </ExpDate> 
       </ItemCard>
      )
