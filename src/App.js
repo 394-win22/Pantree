@@ -1,8 +1,8 @@
 import "./App.css";
 import React from "react";
 import { useData, useUserState, signInWithG, signOutOfG } from "./utilities/firebase.js";
-import { FoodList } from "./food";
-import { AddButton } from "./form";
+import { FoodList,Expired } from "./food";
+import { AddButton, notification} from "./form";
 import {
   MainLayout,
   Header,
@@ -12,6 +12,7 @@ import {
 } from "./styles/PantryStyles.js";
 import { ToastContainer, toast, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {useState,useEffect} from 'react';
 
 const SignInButton = () => (
   <button className="btn"
@@ -41,13 +42,16 @@ const currUser = (user) => {
   return "/";
 }
 
+
 export const App = () => {
 
   const user = useUserState();
 
   const [userKitchen, loading, error] = useData(currUser(user));
+  
   if (error) return <h1>{error}</h1>;
   if (loading) return <h1>Loading the data...</h1>;
+
 
   return (
     <>

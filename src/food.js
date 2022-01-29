@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { confirm } from "react-confirm-box";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { deleteFromFirebase, useUserState } from "./utilities/firebase.js";
 import {
     ItemCard,
@@ -33,7 +33,31 @@ console.log(Milk);
 
 // TODO: Find a way to sort the foods
 
+
+const notify = (foods) => {
+  if(!foods) {return;}
+  var expcount = 0;
+  var abtToExp = 0;
+  console.log("foodddd" + foods);
+  for (const [key, value] of Object.entries(foods)) {
+      console.log(`${key}: ${value}`);
+      // console.log("head"+Expired(value.expDate));
+      if(Expired(value.expDate) === 0){
+        expcount = expcount+1;
+      }
+      if(Expired(value.expDate) === 1){
+        abtToExp = abtToExp+1
+      }
+    }
+    // console.log(expcount)
+  notification("expp", `${expcount } expired, ${abtToExp} about to expire`);
+}
+
+
+
 export const FoodList = ({ foods }) => {
+  useEffect(() => { notify(foods)}, [foods]);
+
   if (!foods) {
     return "";
   }
@@ -41,7 +65,7 @@ export const FoodList = ({ foods }) => {
   const sortedFoods = Object.values(foods).sort((a, b) => {
     return new Date(a.expDate).getTime() - new Date(b.expDate).getTime();
   });
-
+  
   // console.log(typeof sortedFoods[0].expDate);
   return (
     <div className="food-list">
@@ -50,6 +74,7 @@ export const FoodList = ({ foods }) => {
       ))}
     </div>
   );
+  
 };
 
 const MouseEntered = (isShown) => {
@@ -106,7 +131,7 @@ const Food = ({ food }) => {
   };
 
 // return different numbers depending on expiration status
-const Expired = (a) => {
+export const Expired = (a) => {
   const today = new Date().toISOString().substring(0, 10);
   const diff = numDaysBetween(new Date(a), new Date(today));
   if (diff < 0) {

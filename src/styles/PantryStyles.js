@@ -44,8 +44,8 @@ export const Content = styled.div`
 export const ItemCard = styled.div`
     display: grid;
     width: 100%;
-    max-width: 400px;
-    min-width: 300px;
+    max-width: 25%;
+    min-width: 250px;
     height: 160px;
     
     box-shadow: 4px 4px 10px 5px rgba(57, 57, 57, 0.1);
