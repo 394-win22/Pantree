@@ -77,7 +77,7 @@ export const App = () => {
       }
       for (const [key, value] of Object.entries(user_kitchen.foods)) {
         console.log(`pair ${key} : ${value}`)
-        if(value.name.includes(entry)){
+        if(value.name.toLowerCase().includes(entry.toLowerCase())){
           matched[key] = value;
           console.log("yesss");
         }
@@ -125,17 +125,17 @@ export const App = () => {
 
     if(e === "option-1"){
       console.log(`${e}`);
-      filterCriteria(matched, 0)
+      console.log(filterCriteria(matched, 0))
       
     }else if (e === "option-2"){
       console.log(` ${e}`);
-      filterCriteria(matched, 1)
+      console.log(filterCriteria(matched, 1))
     }else if (e === "option-3"){
       console.log(` ${e}`);
-      filterCriteria(matched, 2)
+      console.log(filterCriteria(matched, 2))
     }else{
       console.log(` ${e}`);
-      filterCriteria(matched, 4)
+      console.log(filterCriteria(matched, 4))
     }   
 
   }
