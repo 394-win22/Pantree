@@ -1,5 +1,7 @@
 import "./App.css";
 import React from "react";
+import ReactDOM from "react-dom";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -16,6 +18,7 @@ import {
 import { ToastContainer, toast, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {useState,useEffect} from 'react';
+import { set } from "firebase/database";
 
 const SignInButton = () => (
   <button className="btn"
@@ -54,7 +57,6 @@ export const App = () => {
 
   const user = useUserState();
   const [entry, setEntry] = useState();
-  const [f_value,setValue]=useState('');
 
 
   const [userKitchen, loading, error] = useData(currUser(user));
@@ -65,6 +67,7 @@ export const App = () => {
   
   console.log("USER KITCHEN --> " + userKitchen);
   console.log("ENTRY --> " + entry);
+  // console.log("FILTER VALUE " + f_value);
 
   const mSearchCriteria = (user_kitchen) => {
     if(user_kitchen){
@@ -81,31 +84,60 @@ export const App = () => {
       }
       return matched;
     }
-    return "EMPTY KITCHEN";
+    return "";
+  };
+
+  const filterCriteria = (raw, which=4) => {
+    if(raw){
+
+      if(which === 4){
+        console.log("raw");
+        return raw;
+      }
+
+      var filtered = {};
+      
+      for (const [key, value] of Object.entries(raw)) {
+        // console.log(`Expire date for ${value.name} is ${value.expDate}`)
+        if(Expired(value.expDate) === which){
+          filtered[key] = value;
+          console.log("filtered food " + value.name);
+        }
+      }
+      return filtered;
+    }
+    return "";
   };
 
   var matched = "";
   if(user){
     if(userKitchen){
-      console.log(" USER KITCHEN FOODS ---> " + userKitchen.foods)
+      console.log("USER KITCHEN FOODS ---> " + userKitchen.foods)
       matched = mSearchCriteria(userKitchen);
     }
   }
-  // for (const [key, value] of Object.entries(matched)) {
-  //   console.log("matched pair "+ key, value);
-  // } 
+ 
 
   const handleSelect=(e)=>{
-    // console.log(e);
-    setValue(e);
+
+    console.log(`CLICKED ${e}`);
+
+
     if(e === "option-1"){
-      console.log("clicked option 1");
+      console.log(`${e}`);
+      filterCriteria(matched, 0)
       
     }else if (e === "option-2"){
-      console.log("clicked option 2");
+      console.log(` ${e}`);
+      filterCriteria(matched, 1)
+    }else if (e === "option-3"){
+      console.log(` ${e}`);
+      filterCriteria(matched, 2)
     }else{
-      console.log("clicked option 3");
-    }
+      console.log(` ${e}`);
+      filterCriteria(matched, 4)
+    }   
+
   }
 
   return (
@@ -141,6 +173,8 @@ export const App = () => {
                 <Dropdown.Item eventKey="option-1">expired</Dropdown.Item>
                 <Dropdown.Item eventKey="option-2">expiring soon</Dropdown.Item>
                 <Dropdown.Item eventKey="option-3">good condition</Dropdown.Item>
+                <Dropdown.Item eventKey="option-4">all</Dropdown.Item>
+
                           
             </DropdownButton>
         
