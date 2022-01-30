@@ -13,6 +13,29 @@
   }
 }
 
+
+.content-top{
+  width: 100%;
+  background-color: #d8c1ae;
+  display: flex;
+  margin-top: 25px;
+}
+
+.search-field{
+  margin: 4px;
+  margin-left: 15%;
+  width: 40%;
+  border-radius: 10px;
+  border-color: transparent;
+  height: 45px;
+}
+
+
+#filter{
+  margin-left: 20%;
+}
+
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -40,9 +63,10 @@
 .food-list {
   display: flex;
   flex-wrap: wrap;
-  flex-direction: row;
   align-items: center;
-  justify-content: center;
+  flex-direction: row;
+  margin-left: calc(10% + 75px);
+  justify-content: left;
 }
 
 .signInBtn{

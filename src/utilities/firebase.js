@@ -39,7 +39,7 @@ export const useData = (path, transform) => {
         setError(error);
       });
     }, [path, transform]);
-  
+    
     return [data, loading, error];
   };
 
@@ -74,9 +74,7 @@ export const useData = (path, transform) => {
     useEffect(() => {
       onIdTokenChanged(getAuth(firebase), setUser);
     }, []);
-    if(user){
-      console.log(user.email)
-    }    
+      
     return user;
   };
   

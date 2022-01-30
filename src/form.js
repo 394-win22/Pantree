@@ -22,6 +22,7 @@ export const AddButton = () => (
   </>
 );
 
+
 const MyForm = (param) => {
   var experation = new Date().toISOString().substring(0, 10);
   var today = new Date().toISOString().substring(0, 10);
@@ -245,8 +246,22 @@ const back = () => {
   ReactDOM.render(<App />, document.getElementById("root"));
 };
 
-export const notification = (type) => {
+export const notification = (type,data) => {
   switch (type) {
+    case 'expp':
+    toast.warn(data, {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+      theme: "colored"
+      }
+      );
+      break;
+
     case 'add':
       toast.success('Item added!', {
         position: "top-center",
