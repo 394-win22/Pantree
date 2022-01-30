@@ -2,12 +2,13 @@ import styled from 'styled-components';
 
 export const MainLayout = styled.div`
         height: 100vh;
-        width: 100vw;
+        width: 70vw;
+        margin-left: 15vw;
         display: flex;
         align-items: center;
         position: fixed; 
         flex-direction: column;
-        background: #fff;
+        background:rgba(245, 243, 240, 0.6);
         z-index: 0;
     `
 
@@ -63,7 +64,7 @@ export const ItemCard = styled.div`
 const handleBGcolor = bg => {
     switch (bg) {
       case 1: // on mouse enter
-        return "#e9ffdb";
+        return "#d9823f";
       case 2: // on mouse leave
         return "#FFFFFF";
       default:
@@ -144,7 +145,7 @@ export const ExpDate = styled.p`
 const handleColorType = color => {
     switch (color) {
       case 2: // not gonna expire soon
-        return "#fff";
+        return "#c9d9c5";
       case 1: // about to expire
         return "#FFE8B7";
       case 0: //expired

@@ -39,7 +39,7 @@ export const useData = (path, transform) => {
         setError(error);
       });
     }, [path, transform]);
-  
+    
     return [data, loading, error];
   };
 

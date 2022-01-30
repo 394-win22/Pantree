@@ -34,7 +34,7 @@ console.log(Milk);
 // TODO: Find a way to sort the foods
 
 
-const notify = (foods) => {
+export const notify = (foods) => {
   if(!foods) {return;}
   var expcount = 0;
   var abtToExp = 0;
@@ -61,6 +61,7 @@ export const FoodList = ({ foods }) => {
   if (!foods) {
     return "";
   }
+
 
   const sortedFoods = Object.values(foods).sort((a, b) => {
     return new Date(a.expDate).getTime() - new Date(b.expDate).getTime();

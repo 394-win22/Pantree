@@ -13,6 +13,32 @@
   }
 }
 
+
+.content-top{
+  width: 100%;
+  background-color: #6c6e74;
+  display: flex;
+  margin-top: 25px;
+}
+
+.search-field{
+  margin: 4px;
+  margin-left: 15%;
+  width: 40%;
+  border-radius: 10px;
+  height: 45px;
+}
+
+#filter{
+  margin-left: 20%;
+}
+
+
+
+
+
+
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
