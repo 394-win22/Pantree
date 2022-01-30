@@ -59,17 +59,6 @@ export const ItemCard = styled.div`
     background: ${({ color }) => handleColorType(color)};
     margin: 2%;
 `
-const handleBGcolor = bg => {
-    switch (bg) {
-      case 1: // on mouse enter
-        return "#d9823f";
-      case 2: // on mouse leave
-        return "#FFFFFF";
-      default:
-        return "#FFFFFF"
-    }
-  };
-
 export const ItemImg = styled.img`
         display: flex;
         align-items: center;
