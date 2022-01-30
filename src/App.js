@@ -23,7 +23,7 @@ const SignInButton = () => (
 const SignOutButton = ({ cuser }) => (
   <>
     <p className="email">
-      {cuser}
+      {window.innerWidth > 800 ? cuser : null}
       <button className="btn" id="out"
         onClick={() => signOutOfG()}>
         Sign Out
@@ -58,7 +58,6 @@ export const App = () => {
           <div className="signInBtn">
             {user ? <SignOutButton cuser={user.email} /> : <SignInButton />}
           </div>
-
         </Header>
         <Content>
           {user ? <AddButton /> : ""}
