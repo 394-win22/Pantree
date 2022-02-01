@@ -22,16 +22,30 @@ export const AddButton = () => (
   </>
 );
 
+const SetExpirationDate = (food) =>
+{
+  var experation = new Date();
+  var setDays = 10;
+  experation.setDate(experation.getDate()+setDays);
+  var writtenEXP = experation.toISOString().substring(0,10);
+  return writtenEXP;
+
+}
+
+
 
 const MyForm = (param) => {
-  var experation = new Date().toISOString().substring(0, 10);
+  
+  
+
   var today = new Date().toISOString().substring(0, 10);
+  var expiration = SetExpirationDate("");
   var na = "";
   console.log(param.n);
 
   const [name, setName] = useState(na);
   const [buyDate, setbuyDate] = useState(today);
-  const [expDate, setexpDate] = useState(experation);
+  const [expDate, setexpDate] = useState(today);
   const [icon, setIcon] = useState("");
   const [textarea, setTextarea] = useState("Please add a food item.");
 
@@ -45,7 +59,7 @@ const MyForm = (param) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-
+    //Scan name here to set experation date
     if (!name || !buyDate || !expDate) {
       notification('info');
       return;

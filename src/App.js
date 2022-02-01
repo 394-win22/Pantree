@@ -58,13 +58,16 @@ export const App = () => {
 
 
   const [userKitchen, loading, error] = useData(currUser(user));
+  var printed = false;
 
   if (error) return <h1>{error}</h1>;
   if (loading) return <h1>Loading the data...</h1>;
 
-  
-  console.log("USER KITCHEN --> " + userKitchen);
-  console.log("ENTRY --> " + entry);
+ 
+
+  //console.log(userKitchen);
+  //console.log("USER KITCHEN --> " + userKitchen);
+ // console.log("ENTRY --> " + entry);
   // console.log("FILTER VALUE " + f_value);
 
   const mSearchCriteria = (user_kitchen) => {
@@ -84,6 +87,31 @@ export const App = () => {
     }
     return "";
   };
+
+  const ExpiredFoodAlert = (raw) => 
+  {
+    for (const [key, value] of Object.entries(raw)) {
+      // console.log(`Expire date for ${value.name} is ${value.expDate}`)
+
+      
+      if(Expired(value.expDate) === 0 && !printed){
+        toast.success(value.name + ' Expired!', {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+          theme: "light",
+        }
+        );
+      }
+    }
+
+    printed = true;
+    
+  }
 
   const filterCriteria = (raw, which=4) => {
     if(raw){
@@ -147,6 +175,7 @@ export const App = () => {
           <div className="signInBtn">
             {user ? <SignOutButton cuser={user.email} /> : <SignInButton />}
           </div>
+         
         </Header>
         <Content>
           {user ? 
@@ -159,7 +188,7 @@ export const App = () => {
               placeholder="Search..."
               value={entry}
               onChange={(e) => {
-                setEntry(e.target.value)
+                setEntry(e.target.value);
                 }}/>
 
             <DropdownButton
@@ -175,6 +204,11 @@ export const App = () => {
             </DropdownButton>
         
             <AddButton /> 
+
+            {/* <button type="button" className="btn"
+                    onClick={ExpiredFoodAlert(userKitchen.foods)}>
+              Expired Food Notification
+            </button> */}
 
            </div>
           : ""}

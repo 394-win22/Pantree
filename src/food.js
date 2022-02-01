@@ -12,7 +12,7 @@ import {
     DeleteButton,
     EditButton,
   } from "./styles/PantryStyles.js";
-
+import { ToastContainer, toast, Slide } from 'react-toastify';
 import { GetPhoto } from "./utilities/firebaseStorage.js";
 import { App } from "./App";
 import {
@@ -49,7 +49,6 @@ export const notify = (foods) => {
         abtToExp = abtToExp+1
       }
     }
-    // console.log(expcount)
   notification("expp", `${expcount } expired, ${abtToExp} about to expire`);
 }
 
@@ -57,6 +56,7 @@ export const notify = (foods) => {
 
 export const FoodList = ({ foods }) => {
   useEffect(() => [foods]);
+
 
   if (!foods) {
     return "";
@@ -67,6 +67,7 @@ export const FoodList = ({ foods }) => {
     return new Date(a.expDate).getTime() - new Date(b.expDate).getTime();
   });
   
+
   // console.log(typeof sortedFoods[0].expDate);
   return (
     <div className="food-list">
@@ -85,16 +86,17 @@ const MouseEntered = (isShown) => {
   return 2;
 };
 
+
 const Food = ({ food }) => {
   const [isShown, setIsShown] = useState(false);
   const user = useUserState();
     return(
       <ItemCard 
           color={Expired(food.expDate)}
-          onMouseEnter={() => {setIsShown(true)}}
-          onMouseLeave={() => {setIsShown(false)}}
+          //onMouseEnter={() => {setIsShown(true)}}
+         // onMouseLeave={() => {setIsShown(false)}}
           onClick={() => editButton({ food , user})}
-          bg = {MouseEntered(isShown)}
+        //  bg = {MouseEntered(isShown)}
           style = {{  cursor: 'pointer' }}
         >
         <ItemImg src={food.icon}/>
@@ -137,6 +139,7 @@ export const Expired = (a) => {
   const diff = numDaysBetween(new Date(a), new Date(today));
   if (diff < 0) {
     // expired
+    
     return 0;
   } else if (diff <= 3 && diff >= 0) {
     // expiring soon (within 3 days)
