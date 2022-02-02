@@ -6,6 +6,7 @@ import { App } from "./App";
 import { MySelection, Food2url } from "./select.js";
 import { FaTrashAlt, FaArrowCircleLeft } from "react-icons/fa";
 import { ToastContainer, toast, Slide } from 'react-toastify';
+import { expiry_dates } from '../src/components/expiry_dates.js';
 import 'react-toastify/dist/ReactToastify.css';
 import './form.css'
 export const AddButton = () => (
@@ -82,6 +83,11 @@ const MyForm = (param) => {
     stateChange();
   };
 
+
+  const suggestExpiry = () => {
+    return;
+  }
+
   return (
     <div className="container">
       <ToastContainer transition={Slide} />
@@ -120,6 +126,8 @@ const MyForm = (param) => {
             value={expDate}
             onChange={(e) => setexpDate(e.target.value)}
           />
+          <input type="suggest" value="Suggest Expiration Date" className="btn btn-block" 
+            onClick={suggestExpiry} />
         </div>
         <div>
           <MySelection icon={icon} setIcon={setIcon} />
