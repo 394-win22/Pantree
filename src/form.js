@@ -23,10 +23,10 @@ export const AddButton = () => (
   </>
 );
 
-const SetExpirationDate = (food) =>
+const SetExpirationDate = (day) =>
 {
   var experation = new Date();
-  var setDays = 10;
+  var setDays = day;
   experation.setDate(experation.getDate()+setDays);
   var writtenEXP = experation.toISOString().substring(0,10);
   return writtenEXP;
@@ -86,11 +86,21 @@ const MyForm = (param) => {
 
   const suggestExpiry = (name) => {
       return expiry_dates.map((exp_food, index) => {
-          return (
-              name === exp_food.name ?
-              console.log(exp_food.fridge) : console.log('No')
-          )
+        var newday = new Date();
+        if (name === exp_food.name ){
+          newday = SetExpirationDate(parseInt(exp_food.fridge))
+          update({ icon, name, buyDate, expDate, user });
+          setexpDate(newday);
+        }
+          // return (
+          //     name === exp_food.name ?
+          //     console.log(SetExpirationDate(parseInt(exp_food.fridge))):console.log('No')
+          //     // console.log(exp_food.fridge) : console.log('No')
+          // )
+
+
       })
+      
   }
 
   return (
@@ -104,13 +114,14 @@ const MyForm = (param) => {
             type="text"
             placeholder="Add Food"
             value={name}
-            onChange={(e) =>
+            onChange={(e) => 
               setName(
                 e.target.value
                 // e.target.value.length > 20
                 //   ? e.target.value.slice(0, 20) + "..."
                 //   : e.target.value
               )
+              // suggestExpiry(e);}
             }
           />
         </div>
@@ -132,7 +143,8 @@ const MyForm = (param) => {
             onChange={(e) => setexpDate(e.target.value)}
           />
           <input type="suggest" value="Suggest Expiration Date" className="btn btn-block" 
-            onClick={(e) => suggestExpiry('Apples')} />
+            onClick={(e) => suggestExpiry(name)} 
+            />
         </div>
         <div>
           <MySelection icon={icon} setIcon={setIcon} />
