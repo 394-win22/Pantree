@@ -22,7 +22,7 @@
     "react-notifications-component": "^3.2.6",
     "react-scripts": "^5.0.0",
     "react-select-search": "^3.0.9",
-    "react-toastify": "^8.1.0",
+    "react-toastify": "^8.1.1",
     "styled-components": "^5.3.3",
     "web-vitals": "^2.1.3"
   },

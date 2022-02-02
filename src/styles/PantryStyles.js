@@ -34,11 +34,12 @@ export const H1 = styled.p`
 export const Content = styled.div`
         display: flex;
         flex-direction: column;
-        align-items: center;
         justify-content: top;
+        align-items: center;
         width: 100%;
         height: 88%;
         overflow-y: auto;
+        margin-top: 20px;
     `
 
 export const ItemCard = styled.div`
@@ -78,6 +79,7 @@ export const ItemName = styled.p`
         font-weight: 600;
         font-size: 24px;
         margin-top: 23px;
+        align-self: center;
         color: #000000;
         line-height: 29px;
         text-transform: capitalize;

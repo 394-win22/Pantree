@@ -56,8 +56,6 @@ export const notify = (foods) => {
 
 export const FoodList = ({ foods }) => {
   
-
-
   if (!foods) {
     return "";
   }

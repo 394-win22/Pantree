@@ -65,8 +65,7 @@
   flex-wrap: wrap;
   align-items: center;
   flex-direction: row;
-  margin-left: calc(10% + 75px);
-  justify-content: left;
+  justify-content: center;
 }
 
 .signInBtn{

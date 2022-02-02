@@ -30,8 +30,8 @@ const SignOutButton = ({ cuser,foods}) => {
   useEffect(() => { notify(foods)}, [foods]);
   return(<>
     <p className="email">
-      {window.innerWidth > 800 ? cuser : null}
-      <button className="btn" id="out"
+      {window.innerWidth > 800 ? cuser : null }
+      <button className="btn" id="out" style = {{ width: 120, margin: 20}}
         onClick={() => signOutOfG()}>
         Sign Out
       </button>
@@ -211,10 +211,9 @@ export const App = () => {
         
             <AddButton />
 
-           </div>
-          : ""}
+           </div> : ""}
           <H1>{!user ? "Sign In To Unlock Your Kitchen" : ""}</H1>
-          {userKitchen ?  <FoodList foods={matched}/>: ""}
+          {userKitchen ?  <FoodList foods={ matched }/>: ""}
         </Content>
       </MainLayout>
     </>
