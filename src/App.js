@@ -18,15 +18,16 @@ import 'react-toastify/dist/ReactToastify.css';
 import {useState,useEffect} from 'react';
 import { set } from "firebase/database";
 
-const SignInButton = () => {
+const SignInButton = () => (
   <button className="btn"
     onClick={() => signInWithG()}>
     Sign In
   </button>
    
-};
+);
 
-const SignOutButton = ({ cuser }) => {
+const SignOutButton = ({ cuser,foods}) => {
+  useEffect(() => { notify(foods)}, [foods]);
   return(<>
     <p className="email">
       {window.innerWidth > 800 ? cuser : null}
@@ -38,7 +39,6 @@ const SignOutButton = ({ cuser }) => {
     
 
   </>
-  //useEffect(() => { notify(foods)}, [foods]);
   )
 };
 
@@ -177,7 +177,7 @@ export const App = () => {
           <H1>My Kitchen</H1>
           <div className="signInBtn">
         
-            {user ? <SignOutButton cuser={user.email} /> 
+            {user ? <SignOutButton cuser={user.email} foods={userKitchen.foods}/> 
             : <SignInButton />}
 
           </div>
