@@ -84,8 +84,13 @@ const MyForm = (param) => {
   };
 
 
-  const suggestExpiry = () => {
-    return;
+  const suggestExpiry = (name) => {
+      return expiry_dates.map((exp_food, index) => {
+          return (
+              name === exp_food.name ?
+              console.log(exp_food.fridge) : console.log('No')
+          )
+      })
   }
 
   return (
@@ -127,7 +132,7 @@ const MyForm = (param) => {
             onChange={(e) => setexpDate(e.target.value)}
           />
           <input type="suggest" value="Suggest Expiration Date" className="btn btn-block" 
-            onClick={suggestExpiry} />
+            onClick={(e) => suggestExpiry('Apples')} />
         </div>
         <div>
           <MySelection icon={icon} setIcon={setIcon} />
