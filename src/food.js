@@ -62,11 +62,20 @@ export const FoodList = ({ foods }) => {
 
 
   const sortedFoods = Object.values(foods).sort((a, b) => {
-    return new Date(a.expDate).getTime() - new Date(b.expDate).getTime();
+    const diff = new Date(a.expDate).getTime() - new Date(b.expDate).getTime();
+    if (diff !== 0){
+      return diff;
+    }
+    else{
+      if (a.name > b.name){
+        return 1;
+      } else {
+        return -1;
+      }
+    }
   });
   
 
-  // console.log(typeof sortedFoods[0].expDate);
   return (
     <div className="food-list">
       {Object.values(sortedFoods).map((food, index) => (
@@ -76,14 +85,6 @@ export const FoodList = ({ foods }) => {
   );
   
 };
-
-const MouseEntered = (isShown) => {
-  if (isShown) {
-    return 1;
-  }
-  return 2;
-};
-
 
 const Food = ({ food }) => {
   const [isShown, setIsShown] = useState(false);
@@ -109,17 +110,6 @@ const Food = ({ food }) => {
         </ExpDate> 
       </ItemCard>
      )
-  };
-
-  const deleteButton = async ({ food, user }) => {
-    
-    const result = await confirm("Do you want to delete this item?");
-    if (result) {
-      deleteFromFirebase(food, user);
-      notification('del');
-      ReactDOM.render(<App />, document.getElementById("root"));
-      return;
-    }
   };
 
   const editButton = async ({food, user}) => {

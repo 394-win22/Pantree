@@ -490,9 +490,9 @@ export const expiry_dates =[
         shelf: ""
     },
     {
-        name: "",
-        fridge: "",
-        shelf: ""
+        name: "Banana",
+        fridge: "21",
+        shelf: "3"
     },
     {
         name: "",

@@ -4,8 +4,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useData, useUserState, signInWithG, signOutOfG } from "./utilities/firebase.js";
-import { FoodList,Expired, m_notify, notify } from "./food";
-import { AddButton, notification} from "./form";
+import { FoodList, Expired, m_notify, notify } from "./food";
+import { AddButton, notification } from "./form";
 import {
   MainLayout,
   Header,
@@ -15,28 +15,29 @@ import {
 } from "./styles/PantryStyles.js";
 import { ToastContainer, toast, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {useState,useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import { set } from "firebase/database";
+import ReactDOM from "react-dom";
 
 const SignInButton = () => (
   <button className="btn"
     onClick={() => signInWithG()}>
     Sign In
   </button>
-   
+
 );
 
-const SignOutButton = ({ cuser,foods}) => {
-  useEffect(() => { notify(foods)}, [foods]);
-  return(<>
+const SignOutButton = ({ cuser, foods }) => {
+  useEffect(() => { notify(foods) }, [foods]);
+  return (<>
     <p className="email">
-      {window.innerWidth > 800 ? cuser : null }
-      <button className="btn" id="out" style = {{ width: 120, margin: 20}}
+      {window.innerWidth > 800 ? cuser : null}
+      <button className="btn" id="out" style={{ width: 120, margin: 20 }}
         onClick={() => signOutOfG()}>
         Sign Out
       </button>
     </p>
-    
+
 
   </>
   )
@@ -49,124 +50,96 @@ const currUser = (user) => {
   return "/";
 }
 
-const userexist = (user) =>
-{
-  
-}
 
 export const App = () => {
 
   const user = useUserState();
   const [entry, setEntry] = useState();
-
-
   const [userKitchen, loading, error] = useData(currUser(user));
+  const [sorting, setSorting] = useState('all')
   var printed = false;
 
   if (error) return <h1>{error}</h1>;
   if (loading) return <h1>Loading the data...</h1>;
 
- 
-
-  //console.log(userKitchen);
-  //console.log("USER KITCHEN --> " + userKitchen);
- // console.log("ENTRY --> " + entry);
-  // console.log("FILTER VALUE " + f_value);
-
   const mSearchCriteria = (user_kitchen) => {
-    if(user_kitchen){
+    if (user_kitchen) {
       var matched = {};
-      if(!entry){
-        return user_kitchen.foods;
-      }
-      for (const [key, value] of Object.entries(user_kitchen.foods)) {
-        console.log(`pair ${key} : ${value}`)
-        if(value.name.toLowerCase().includes(entry.toLowerCase())){
-          matched[key] = value;
-          console.log("yesss");
+
+      if (entry) {
+        for (const [key, value] of Object.entries(user_kitchen.foods)) {
+          switch (sorting) {
+            case 'all':
+              if (value.name.toLowerCase().includes(entry.toLowerCase())) {
+                matched[key] = value;
+              }
+            case 'expired':
+              if (value.name.toLowerCase().includes(entry.toLowerCase()) && Expired(value.expDate) == 0) {
+                matched[key] = value;
+              }
+              continue;
+            case 'expiring soon':
+              if (value.name.toLowerCase().includes(entry.toLowerCase()) && Expired(value.expDate) == 1) {
+                matched[key] = value;
+              }
+              continue;
+            case 'good condition':
+              if (value.name.toLowerCase().includes(entry.toLowerCase()) && Expired(value.expDate) == 2) {
+                matched[key] = value;
+              }
+              continue;
+          }
+        }
+      } else {
+        for (const [key, value] of Object.entries(user_kitchen.foods)) {
+          switch (sorting) {
+            case 'all':
+              return user_kitchen.foods;
+            case 'expired':
+              if (Expired(value.expDate) == 0) {
+                matched[key] = value;
+              }
+              continue;
+            case 'expiring soon':
+              if (Expired(value.expDate) == 1) {
+                matched[key] = value;
+              }
+              continue;
+            case 'good condition':
+              if (Expired(value.expDate) == 2) {
+                matched[key] = value;
+              }
+              continue;
+          }
         }
       }
+
       return matched;
     }
     return "";
   };
 
-  const ExpiredFoodAlert = (raw) => 
-  {
-    for (const [key, value] of Object.entries(raw)) {
-      // console.log(`Expire date for ${value.name} is ${value.expDate}`)
-
-      
-      if(Expired(value.expDate) === 0 && !printed){
-        toast.success(value.name + ' Expired!', {
-          position: "top-center",
-          autoClose: 3000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: false,
-          progress: undefined,
-          theme: "light",
-        }
-        );
-      }
-    }
-
-    printed = true;
-    
-  }
-
-  const filterCriteria = (raw, which=4) => {
-    if(raw){
-
-      if(which === 4){
-        console.log("raw");
-        return raw;
-      }
-
-      var filtered = {};
-      
-      for (const [key, value] of Object.entries(raw)) {
-        // console.log(`Expire date for ${value.name} is ${value.expDate}`)
-        if(Expired(value.expDate) === which){
-          filtered[key] = value;
-          console.log("filtered food " + value.name);
-        }
-      }
-      return filtered;
-    }
-    return "";
-  };
-
   var matched = "";
-  if(user){
-    if(userKitchen){
+  if (user) {
+    if (userKitchen) {
       console.log("USER KITCHEN FOODS ---> " + userKitchen.foods)
       matched = mSearchCriteria(userKitchen);
     }
   }
- 
 
-  const handleSelect=(e)=>{
+
+  const handleSelect = (e) => {
 
     console.log(`CLICKED ${e}`);
-
-
-    if(e === "option-1"){
-      console.log(`${e}`);
-      console.log(filterCriteria(matched, 0))
-      
-    }else if (e === "option-2"){
-      console.log(` ${e}`);
-      console.log(filterCriteria(matched, 1))
-    }else if (e === "option-3"){
-      console.log(` ${e}`);
-      console.log(filterCriteria(matched, 2))
-    }else{
-      console.log(` ${e}`);
-      console.log(filterCriteria(matched, 4))
-    }   
-
+    if (e === "option-1") {
+      setSorting('expired')
+    } else if (e === "option-2") {
+      setSorting("expiring soon")
+    } else if (e === "option-3") {
+      setSorting("good condition")
+    } else {
+      setSorting("all");
+    }
   }
 
   return (
@@ -176,44 +149,41 @@ export const App = () => {
         <Header>
           <H1>My Kitchen</H1>
           <div className="signInBtn">
-        
-            {user ? <SignOutButton cuser={user.email} foods={userKitchen.foods}/> 
-            : <SignInButton />}
+
+            {user ? <SignOutButton cuser={user.email} foods={userKitchen ? userKitchen.foods : null} />
+              : <SignInButton />}
 
           </div>
-         
+
         </Header>
         <Content>
-          {user ? 
-          
-          <div className="content-top"> 
+          {user ?
 
-            <input 
-              className="search-field"
-              type="text"
-              placeholder="Search..."
-              value={entry}
-              onChange={(e) => {
-                setEntry(e.target.value);
-                }}/>
+            <div className="content-top">
 
-            <DropdownButton
-              title="Filter by"
-              id="dropdown-menu-align-right"
-              onSelect={handleSelect}>
-                <Dropdown.Item eventKey="option-1">expired</Dropdown.Item>
-                <Dropdown.Item eventKey="option-2">expiring soon</Dropdown.Item>
-                <Dropdown.Item eventKey="option-3">good condition</Dropdown.Item>
-                <Dropdown.Item eventKey="option-4">all</Dropdown.Item>
+              <input
+                className="search-field"
+                type="text"
+                placeholder="Search..."
+                value={entry}
+                onChange={(e) => { setEntry(e.target.value) }} />
 
-                          
-            </DropdownButton>
-        
-            <AddButton />
+                <DropdownButton
+                  title= {sorting}
+                  id="dropdown-menu-align-right"
+                  onSelect={handleSelect}>
+                  <Dropdown.Item eventKey="option-1">expired</Dropdown.Item>
+                  <Dropdown.Item eventKey="option-2">expiring soon</Dropdown.Item>
+                  <Dropdown.Item eventKey="option-3">good condition</Dropdown.Item>
+                  <Dropdown.Item eventKey="option-4">all</Dropdown.Item>
+                </DropdownButton>
 
-           </div> : ""}
+
+              <AddButton />
+
+            </div> : ""}
           <H1>{!user ? "Sign In To Unlock Your Kitchen" : ""}</H1>
-          {userKitchen ?  <FoodList foods={ matched }/>: ""}
+          {userKitchen ? <FoodList foods={matched} /> : ""}
         </Content>
       </MainLayout>
     </>

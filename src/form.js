@@ -23,12 +23,11 @@ export const AddButton = () => (
   </>
 );
 
-const SetExpirationDate = (day) =>
-{
+const SetExpirationDate = (day) => {
   var experation = new Date();
   var setDays = day;
-  experation.setDate(experation.getDate()+setDays);
-  var writtenEXP = experation.toISOString().substring(0,10);
+  experation.setDate(experation.getDate() + setDays);
+  var writtenEXP = experation.toISOString().substring(0, 10);
   return writtenEXP;
 
 }
@@ -36,11 +35,10 @@ const SetExpirationDate = (day) =>
 
 
 const MyForm = (param) => {
-  
-  
+
+
 
   var today = new Date().toISOString().substring(0, 10);
-  var expiration = SetExpirationDate("");
   var na = "";
   console.log(param.n);
 
@@ -73,7 +71,7 @@ const MyForm = (param) => {
 
     update({ icon, name, buyDate, expDate, user });
 
-    if (name != "") {
+    if (name !== "") {
       notification('add');
     }
 
@@ -84,23 +82,18 @@ const MyForm = (param) => {
   };
 
 
-  const suggestExpiry = (name) => {
-      return expiry_dates.map((exp_food, index) => {
-        var newday = new Date();
-        if (name === exp_food.name ){
-          newday = SetExpirationDate(parseInt(exp_food.fridge))
-          update({ icon, name, buyDate, expDate, user });
-          setexpDate(newday);
-        }
-          // return (
-          //     name === exp_food.name ?
-          //     console.log(SetExpirationDate(parseInt(exp_food.fridge))):console.log('No')
-          //     // console.log(exp_food.fridge) : console.log('No')
-          // )
+  const suggestExpiry = (foodName) => {
+    setName(foodName)
+    return expiry_dates.map((exp_food, index) => {
+      var newday = new Date();
+      if (foodName === exp_food.name) {
+        newday = SetExpirationDate(parseInt(exp_food.fridge))
+        notification('suggested',foodName)
+        setexpDate(newday);
+      }
+      return
+    })
 
-
-      })
-      
   }
 
   return (
@@ -114,15 +107,7 @@ const MyForm = (param) => {
             type="text"
             placeholder="Add Food"
             value={name}
-            onChange={(e) => 
-              setName(
-                e.target.value
-                // e.target.value.length > 20
-                //   ? e.target.value.slice(0, 20) + "..."
-                //   : e.target.value
-              )
-              // suggestExpiry(e);}
-            }
+            onChange={(e) => suggestExpiry(e.target.value)}
           />
         </div>
         <div className="form-control">
@@ -142,9 +127,6 @@ const MyForm = (param) => {
             value={expDate}
             onChange={(e) => setexpDate(e.target.value)}
           />
-          <input type="suggest" value="Suggest Expiration Date" className="btn btn-block" 
-            onClick={(e) => suggestExpiry(name)} 
-            />
         </div>
         <div>
           <MySelection icon={icon} setIcon={setIcon} />
@@ -161,22 +143,35 @@ export const EditMyForm = (param) => {
   var experation = new Date().toISOString().substring(0, 10);
   var today = new Date().toISOString().substring(0, 10);
   var na = "";
-  var Editing = new Boolean(false);
+  var Editing = false;
 
-  if (param.date !== undefined) {
+  if (param.date) {
     today = param.date;
-    Editing = new Boolean(true);
+    Editing = true;
   }
 
-  if (param.exp !== undefined) {
+  if (param.exp) {
     experation = param.exp;
   }
 
-  if (param.n !== undefined) {
+  if (param.n) {
     na = param.n;
   }
 
   console.log(param.n);
+
+  const suggestExpiry = (foodName) => {
+    setName(foodName)
+    return expiry_dates.map((exp_food, index) => {
+      var newday = new Date();
+      if (foodName === exp_food.name) {
+        notification('suggested',foodName)
+        newday = SetExpirationDate(parseInt(exp_food.fridge))
+        setexpDate(newday);
+      }
+    })
+
+  }
 
   const [name, setName] = useState(na);
   const [buyDate, setbuyDate] = useState(today);
@@ -206,15 +201,14 @@ export const EditMyForm = (param) => {
 
     update({ icon, name, buyDate, expDate, user });
 
-    if (name != "") {
+    if (name !== "") {
     }
 
     setName("");
     setbuyDate(today);
     setexpDate(today);
-    // wait several seconds and set "item added" back to "please add"
     stateChange();
-
+    notification('edit');
     back();
   };
 
@@ -227,13 +221,7 @@ export const EditMyForm = (param) => {
             type="text"
             placeholder="Add Food"
             value={name}
-            onChange={(e) =>
-              setName(
-                e.target.value.length > 21
-                  ? e.target.value.slice(0, 20) + "..."
-                  : e.target.value
-              )
-            }
+            onChange={(e) => suggestExpiry(e.target.value)}
           />
         </div>
         <div className="form-control">
@@ -256,9 +244,9 @@ export const EditMyForm = (param) => {
         </div>
 
         <input type="submit" value="Finish Editing" className="btn btn-block" />
-        <br/>
+        <br />
         <div className="btn2 btn-block" onClick={() => back()}>
-        <center><FaTrashAlt size={ 20 } style={{ color: 'white', cursor: 'pointer', margin: 4 }} /></center>
+          <center><FaTrashAlt size={20} style={{ color: 'white', cursor: 'pointer', margin: 4 }} /></center>
         </div>
       </form>
     </div>
@@ -285,18 +273,18 @@ const back = () => {
   ReactDOM.render(<App />, document.getElementById("root"));
 };
 
-export const notification = (type,data) => {
+export const notification = (type, data) => {
   switch (type) {
     case 'expp':
-    toast.warn(data, {
-      position: "top-center",
-      autoClose: 2000,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: false,
-      progress: undefined,
-      theme: "colored"
+      toast.warn(data, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "colored"
       }
       );
       break;
@@ -330,6 +318,19 @@ export const notification = (type,data) => {
       break;
     case 'del':
       toast.success('Item deleted!', {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "colored"
+      }
+      );
+      break;
+    case 'suggested':
+      toast.success('Expiration date suggested', {
         position: "top-center",
         autoClose: 2000,
         hideProgressBar: true,
