@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useData, useUserState, signInWithG, signOutOfG } from "./utilities/firebase.js";
-import { FoodList,Expired, m_notify } from "./food";
+import { FoodList,Expired, m_notify, notify } from "./food";
 import { AddButton, notification} from "./form";
 import {
   MainLayout,
@@ -18,15 +18,16 @@ import 'react-toastify/dist/ReactToastify.css';
 import {useState,useEffect} from 'react';
 import { set } from "firebase/database";
 
-const SignInButton = () => (
+const SignInButton = () => {
   <button className="btn"
     onClick={() => signInWithG()}>
     Sign In
   </button>
-);
+   
+};
 
-const SignOutButton = ({ cuser }) => (
-  <>
+const SignOutButton = ({ cuser }) => {
+  return(<>
     <p className="email">
       {window.innerWidth > 800 ? cuser : null}
       <button className="btn" id="out"
@@ -34,10 +35,12 @@ const SignOutButton = ({ cuser }) => (
         Sign Out
       </button>
     </p>
-
+    
 
   </>
-);
+  //useEffect(() => { notify(foods)}, [foods]);
+  )
+};
 
 const currUser = (user) => {
   if (user) {
@@ -173,7 +176,10 @@ export const App = () => {
         <Header>
           <H1>My Kitchen</H1>
           <div className="signInBtn">
-            {user ? <SignOutButton cuser={user.email} /> : <SignInButton />}
+        
+            {user ? <SignOutButton cuser={user.email} /> 
+            : <SignInButton />}
+
           </div>
          
         </Header>
@@ -203,12 +209,7 @@ export const App = () => {
                           
             </DropdownButton>
         
-            <AddButton /> 
-
-            {/* <button type="button" className="btn"
-                    onClick={ExpiredFoodAlert(userKitchen.foods)}>
-              Expired Food Notification
-            </button> */}
+            <AddButton />
 
            </div>
           : ""}

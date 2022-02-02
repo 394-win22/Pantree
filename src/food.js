@@ -55,7 +55,7 @@ export const notify = (foods) => {
 
 
 export const FoodList = ({ foods }) => {
-  useEffect(() => [foods]);
+  
 
 
   if (!foods) {
