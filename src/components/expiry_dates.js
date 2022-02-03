@@ -490,184 +490,48 @@ export const expiry_dates =[
         shelf: ""
     },
     {
-        name: "Banana",
-        fridge: "21",
-        shelf: "3"
-    },
-    {
-        name: "",
-        fridge: "",
+        name: "Bagels",
+        fridge: "14",
         shelf: ""
     },
     {
-        name: "",
-        fridge: "",
+        name: "Pancakes",
+        fridge: "4",
         shelf: ""
     },
     {
-        name: "",
-        fridge: "",
+        name: "Waffles",
+        fridge: "4",
         shelf: ""
     },
     {
-        name: "",
-        fridge: "",
+        name: "Tempeh",
+        fridge: "14",
         shelf: ""
     },
     {
-        name: "",
-        fridge: "",
+        name: "Cheesecake",
+        fridge: "7",
         shelf: ""
     },
     {
-        name: "",
-        fridge: "",
-        shelf: ""
+        name: "Beans",
+        fridge: "365",
+        shelf: "365"
     },
     {
-        name: "",
-        fridge: "",
-        shelf: ""
+        name: "Cereal",
+        fridge: "365",
+        shelf: "365"
     },
     {
-        name: "",
-        fridge: "",
-        shelf: ""
+        name: "Coffee",
+        fridge: "14",
+        shelf: "14"
     },
     {
-        name: "",
-        fridge: "",
-        shelf: ""
+        name: "Chocolate syrup",
+        fridge: "182",
+        shelf: "700"
     },
-    {
-        name: "",
-        fridge: "",
-        shelf: ""
-    },
-    {
-        name: "",
-        fridge: "",
-        shelf: ""
-    },
-    {
-        name: "",
-        fridge: "",
-        shelf: ""
-    },
-    {
-        name: "",
-        fridge: "",
-        shelf: ""
-    },
-    {
-        name: "",
-        fridge: "",
-        shelf: ""
-    },
-    {
-        name: "",
-        fridge: "",
-        shelf: ""
-    },
-    {
-        name: "",
-        fridge: "",
-        shelf: ""
-    },
-    {
-        name: "",
-        fridge: "",
-        shelf: ""
-    },
-    {
-        name: "",
-        fridge: "",
-        shelf: ""
-    },
-    {
-        name: "",
-        fridge: "",
-        shelf: ""
-    },
-    {
-        name: "",
-        fridge: "",
-        shelf: ""
-    },
-    {
-        name: "",
-        fridge: "",
-        shelf: ""
-    },
-    {
-        name: "",
-        fridge: "",
-        shelf: ""
-    },
-    {
-        name: "",
-        fridge: "",
-        shelf: ""
-    },
-    {
-        name: "",
-        fridge: "",
-        shelf: ""
-    },
-    {
-        name: "",
-        fridge: "",
-        shelf: ""
-    },
-    {
-        name: "",
-        fridge: "",
-        shelf: ""
-    },
-    {
-        name: "",
-        fridge: "",
-        shelf: ""
-    },
-    {
-        name: "",
-        fridge: "",
-        shelf: ""
-    },
-    {
-        name: "",
-        fridge: "",
-        shelf: ""
-    },
-    {
-        name: "",
-        fridge: "",
-        shelf: ""
-    },
-    {
-        name: "",
-        fridge: "",
-        shelf: ""
-    },
-    {
-        name: "",
-        fridge: "",
-        shelf: ""
-    },
-    {
-        name: "",
-        fridge: "",
-        shelf: ""
-    },
-    {
-        name: "",
-        fridge: "",
-        shelf: ""
-    },
-    {
-        name: "",
-        fridge: "",
-        shelf: ""
-    },
-    
 ]
