@@ -183,7 +183,7 @@ export const EditMyForm = (param) => {
         else {
           //newday = SetExpirationDate(parseInt(exp_food.freezer))
         }
-        notification('suggested', foodName)
+        notification('suggested', foodName);
         setexpDate(newday);
       }
       return
@@ -272,7 +272,7 @@ export const EditMyForm = (param) => {
 };
 
 //Update the state with new items and
-const update = ({ icon, name, buyDate, expDate, user, section }) => {
+export const update = ({ icon, name, buyDate, expDate, user, section }) => {
   // console.log("icon" + Food2url(icon));
   const namex = {
     icon: Food2url(icon),

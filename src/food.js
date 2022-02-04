@@ -52,16 +52,20 @@ export const notify = (foods) => {
   notification("expp", `${expcount } expired, ${abtToExp} about to expire`);
 }
 
+//const sections = ["Fridge", "Shelf", "Freezer"]
 
+const sections = { F: 'fridge', W: 'freezer', S: 'shelf'};
 
 export const FoodList = ({ foods }) => {
+  const [section, setSection] = useState('fridge');
+  const foodSections = Object.values(foods).filter(food => food.section === section);
   
   if (!foods) {
     return "";
   }
 
 
-  const sortedFoods = Object.values(foods).sort((a, b) => {
+  const sortedFoods = Object.values(foodSections).sort((a, b) => {
     const diff = new Date(a.expDate).getTime() - new Date(b.expDate).getTime();
     if (diff !== 0){
       return diff;
@@ -74,17 +78,46 @@ export const FoodList = ({ foods }) => {
       }
     }
   });
+
   
 
   return (
+    
     <div className="food-list">
-      {Object.values(sortedFoods).map((food, index) => (
+      <SectionSelector section={section} setSection={setSection}/>
+
+      {
+
+      
+
+      Object.values(sortedFoods).map((food, index) => (
         <Food key={index} food={food} />
-      ))}
+      ))
+      
+      }
     </div>
   );
   
 };
+
+
+const SectionSelector = ({section, setSection}) => (
+  <div className="btn-group">
+  { 
+    Object.values(sections)
+      .map(value => <SectionButton key={value} section={value} setSection ={setSection} checked={value === section}/>)
+  }
+  </div>
+);
+
+const SectionButton = ({section, setSection , checked}) => (
+  <>
+    <input type="radio" id={section} className="btn-check" autoComplete="off"  checked={checked} onChange={() => setSection(section)}/>
+    <label class="btn btn-success m-1 p-2" htmlFor={section}>
+    { section }
+    </label>
+  </>
+);
 
 const Food = ({ food }) => {
   const [isShown, setIsShown] = useState(false);

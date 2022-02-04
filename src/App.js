@@ -5,7 +5,7 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useData, useUserState, signInWithG, signOutOfG } from "./utilities/firebase.js";
 import { FoodList, Expired, m_notify, notify } from "./food";
-import { AddButton, notification } from "./form";
+import { AddButton, notification, update } from "./form";
 import {
   MainLayout,
   Header,
@@ -142,6 +142,12 @@ export const App = () => {
     }
   }
 
+  const quickadd = () => {
+    const today = new Date().toISOString().substring(0, 10);
+    update("", "food1", today, today, user, 'fridge')
+  }
+
+
   return (
     <>
       <ToastContainer transition={Slide} />
@@ -183,12 +189,12 @@ export const App = () => {
 
             </div> : ""}
           <H1>{!user ? "Sign In To Unlock Your Kitchen" : ""}</H1>
-          {userKitchen ? <FoodList foods={matched} /> : ""}
+          {userKitchen ?  <FoodList foods={matched} />: ""}
         </Content>
       </MainLayout>
     </>
   );
 
 };
-
+//<div> <button onClick={quickadd}className="btn">quick add</button><FoodList foods={matched} /></div>
 export default App;
