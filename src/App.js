@@ -10,6 +10,7 @@ import {
   MainLayout,
   Header,
   H1,
+  H2,
   Content,
   UserName,
 } from "./styles/PantryStyles.js";
@@ -57,15 +58,13 @@ export const App = () => {
   const [entry, setEntry] = useState();
   const [userKitchen, loading, error] = useData(currUser(user));
   const [sorting, setSorting] = useState('all')
-  var printed = false;
+  var matched = {};
 
   if (error) return <h1>{error}</h1>;
   if (loading) return <h1>Loading the data...</h1>;
 
   const mSearchCriteria = (user_kitchen) => {
     if (user_kitchen) {
-      var matched = {};
-
       if (entry) {
         for (const [key, value] of Object.entries(user_kitchen.foods)) {
           switch (sorting) {
@@ -119,7 +118,6 @@ export const App = () => {
     return "";
   };
 
-  var matched = "";
   if (user) {
     if (userKitchen) {
       console.log("USER KITCHEN FOODS ---> " + userKitchen.foods)
@@ -177,13 +175,12 @@ export const App = () => {
                   <Dropdown.Item eventKey="option-3">good condition</Dropdown.Item>
                   <Dropdown.Item eventKey="option-4">all</Dropdown.Item>
                 </DropdownButton>
-
-
               <AddButton />
 
             </div> : ""}
-          <H1>{!user ? "Sign In To Unlock Your Kitchen" : ""}</H1>
-          {userKitchen ? <FoodList foods={matched} /> : ""}
+          {!user ? <H2>Sign In To Unlock Your Kitchen</H2> : null}
+          {Object.keys(matched).length === 0 ? <H2>No matched items</H2> : null}
+          {userKitchen ? <FoodList foods={ matched } /> : ""}
         </Content>
       </MainLayout>
     </>
