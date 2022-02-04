@@ -179,7 +179,7 @@ export const App = () => {
 
             </div> : ""}
           {!user ? <H2>Sign In To Unlock Your Kitchen</H2> : null}
-          {Object.keys(matched).length === 0 ? <H2>No matched items</H2> : null}
+          {Object.keys(matched).length === 0 ? <H2>No matched items :(</H2> : null}
           {userKitchen ? <FoodList foods={ matched } /> : ""}
         </Content>
       </MainLayout>

@@ -77,7 +77,7 @@ const MyForm = (param) => {
     setSection(foodSection)
     return expiry_dates.map((exp_food, index) => {
       var newday = new Date();
-      if (foodName === exp_food.name) {
+      if (foodName.toLowerCase() === exp_food.name.toLowerCase()) {
         if (foodSection === 'fridge') {
           newday = SetExpirationDate(parseInt(exp_food.fridge))
         }
@@ -173,7 +173,7 @@ export const EditMyForm = (param) => {
     setSection(foodSection)
     return expiry_dates.map((exp_food, index) => {
       var newday = new Date();
-      if (foodName === exp_food.name) {
+      if (foodName.toLowerCase() === exp_food.name.toLowerCase()) {
         if (foodSection === 'fridge') {
           newday = SetExpirationDate(parseInt(exp_food.fridge))
         }
