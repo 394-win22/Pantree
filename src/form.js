@@ -7,6 +7,8 @@ import { MySelection, Food2url } from "./select.js";
 import { FaTrashAlt, FaArrowCircleLeft } from "react-icons/fa";
 import { ToastContainer, toast, Slide } from 'react-toastify';
 import { expiry_dates } from '../src/components/expiry_dates.js';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Dropdown from 'react-bootstrap/Dropdown';
 import 'react-toastify/dist/ReactToastify.css';
 import './form.css'
 export const AddButton = () => (
@@ -32,29 +34,17 @@ const SetExpirationDate = (day) => {
 
 }
 
-
-
 const MyForm = (param) => {
-
-
-
   var today = new Date().toISOString().substring(0, 10);
   var na = "";
-  console.log(param.n);
+  //console.log(param.n);
 
   const [name, setName] = useState(na);
   const [buyDate, setbuyDate] = useState(today);
   const [expDate, setexpDate] = useState(today);
   const [icon, setIcon] = useState("");
-  const [textarea, setTextarea] = useState("Please add a food item.");
-
   const user = useUserState();
-
-  function stateChange() {
-    setTimeout(function () {
-      setTextarea("Please add the next item.");
-    }, 3000);
-  }
+  const [section, setSection] = useState('fridge');
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -69,7 +59,7 @@ const MyForm = (param) => {
       return;
     }
 
-    update({ icon, name, buyDate, expDate, user });
+    update({ icon, name, buyDate, expDate, user, section });
 
     if (name !== "") {
       notification('add');
@@ -78,23 +68,32 @@ const MyForm = (param) => {
     setName("");
     setbuyDate(today);
     setexpDate(today);
-    stateChange();
+    setSection('fridge');
   };
 
 
-  const suggestExpiry = (foodName) => {
+  const suggestExpiry = (foodName, foodSection) => {
     setName(foodName)
+    setSection(foodSection)
     return expiry_dates.map((exp_food, index) => {
       var newday = new Date();
       if (foodName === exp_food.name) {
-        newday = SetExpirationDate(parseInt(exp_food.fridge))
-        notification('suggested',foodName)
+        if (foodSection === 'fridge') {
+          newday = SetExpirationDate(parseInt(exp_food.fridge))
+        }
+        else if (foodSection === 'shelf') {
+          newday = SetExpirationDate(parseInt(exp_food.shelf))
+        }
+        else {
+          //newday = SetExpirationDate(parseInt(exp_food.freezer))
+        }
+        notification('suggested', foodName)
         setexpDate(newday);
       }
       return
     })
-
   }
+ 
 
   return (
     <div className="container">
@@ -107,7 +106,7 @@ const MyForm = (param) => {
             type="text"
             placeholder="Add Food"
             value={name}
-            onChange={(e) => suggestExpiry(e.target.value)}
+            onChange={(e) => suggestExpiry(e.target.value, section)}
           />
         </div>
         <div className="form-control">
@@ -128,6 +127,15 @@ const MyForm = (param) => {
             onChange={(e) => setexpDate(e.target.value)}
           />
         </div>
+        <DropdownButton
+          title={section}
+          id="dropdown-menu-align-left"
+          onSelect={(e) => suggestExpiry(name, e)}
+        >
+          <Dropdown.Item eventKey="fridge">fridge</Dropdown.Item>
+          <Dropdown.Item eventKey="shelf">shelf</Dropdown.Item>
+          <Dropdown.Item eventKey="freezer">freezer</Dropdown.Item>
+        </DropdownButton>
         <div>
           <MySelection icon={icon} setIcon={setIcon} />
         </div>
@@ -160,15 +168,25 @@ export const EditMyForm = (param) => {
 
   console.log(param.n);
 
-  const suggestExpiry = (foodName) => {
+  const suggestExpiry = (foodName, foodSection) => {
     setName(foodName)
+    setSection(foodSection)
     return expiry_dates.map((exp_food, index) => {
       var newday = new Date();
       if (foodName === exp_food.name) {
-        notification('suggested',foodName)
-        newday = SetExpirationDate(parseInt(exp_food.fridge))
+        if (foodSection === 'fridge') {
+          newday = SetExpirationDate(parseInt(exp_food.fridge))
+        }
+        else if (foodSection === 'shelf') {
+          newday = SetExpirationDate(parseInt(exp_food.shelf))
+        }
+        else {
+          //newday = SetExpirationDate(parseInt(exp_food.freezer))
+        }
+        notification('suggested', foodName)
         setexpDate(newday);
       }
+      return
     })
 
   }
@@ -177,14 +195,8 @@ export const EditMyForm = (param) => {
   const [buyDate, setbuyDate] = useState(today);
   const [expDate, setexpDate] = useState(experation);
   const [icon, setIcon] = useState("");
-  const [textarea, setTextarea] = useState("Please add a food item.");
   const user = useUserState();
-
-  function stateChange() {
-    setTimeout(function () {
-      setTextarea("Please add the next item.");
-    }, 3000);
-  }
+  const [section, setSection] = useState('fridge');
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -199,21 +211,17 @@ export const EditMyForm = (param) => {
       return;
     }
 
-    update({ icon, name, buyDate, expDate, user });
+    update({ icon, name, buyDate, expDate, user, section });
 
     if (name !== "") {
     }
 
-    setName("");
-    setbuyDate(today);
-    setexpDate(today);
-    stateChange();
-    notification('edit');
     back();
   };
 
   return (
     <div className="container">
+      <ToastContainer transition={Slide} />
       <form className="add-form" onSubmit={onSubmit}>
         <div className="form-control">
           <label>Food Name</label>
@@ -221,7 +229,7 @@ export const EditMyForm = (param) => {
             type="text"
             placeholder="Add Food"
             value={name}
-            onChange={(e) => suggestExpiry(e.target.value)}
+            onChange={(e) => suggestExpiry(e.target.value, section)}
           />
         </div>
         <div className="form-control">
@@ -243,6 +251,16 @@ export const EditMyForm = (param) => {
           />
         </div>
 
+        <DropdownButton
+          title={section}
+          id="dropdown-menu-align-left"
+          onSelect={(e) => suggestExpiry(name, e)}
+        >
+          <Dropdown.Item eventKey="fridge">fridge</Dropdown.Item>
+          <Dropdown.Item eventKey="shelf">shelf</Dropdown.Item>
+          <Dropdown.Item eventKey="freezer">freezer</Dropdown.Item>
+        </DropdownButton>
+
         <input type="submit" value="Finish Editing" className="btn btn-block" />
         <br />
         <div className="btn2 btn-block" onClick={() => back()}>
@@ -254,13 +272,14 @@ export const EditMyForm = (param) => {
 };
 
 //Update the state with new items and
-const update = ({ icon, name, buyDate, expDate, user }) => {
+const update = ({ icon, name, buyDate, expDate, user, section }) => {
   // console.log("icon" + Food2url(icon));
   const namex = {
     icon: Food2url(icon),
     name: name,
     buyDate: buyDate,
     expDate: expDate,
+    section: section,
   };
 
   const id = Math.round(Math.random() * 100000);
