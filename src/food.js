@@ -131,7 +131,10 @@ const Food = ({ food }) => {
         //  bg = {MouseEntered(isShown)}
           style = {{  cursor: 'pointer' }}
         >
-        <ItemImg src={food.icon}/>
+        <ItemImg>
+          {food.icon}
+        </ItemImg>
+        
         <ItemName >{
             food.name.length > 10 ?
             food.name.substring(0,10)+"..." :

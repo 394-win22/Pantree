@@ -136,9 +136,9 @@ const MyForm = (param) => {
           <Dropdown.Item eventKey="shelf">shelf</Dropdown.Item>
           <Dropdown.Item eventKey="freezer">freezer</Dropdown.Item>
         </DropdownButton>
-        <div>
+        {/* <div>
           <MySelection icon={icon} setIcon={setIcon} />
-        </div>
+        </div> */}
 
         <input type="submit" value="Add item" className="btn btn-block" />
 
@@ -271,11 +271,29 @@ export const EditMyForm = (param) => {
   );
 };
 
+const emoji = (value) => {
+  
+  const name = require("emoji-name-map");
+  var noemoji = name.get("shopping_cart"); // default icon
+  var value_lower = value.toLowerCase();
+  for (let i = value_lower.length+1; i > value_lower.length-3; i--) {
+    var substr = value_lower.substring(0,i);
+    console.log(substr);
+    var substr_emoji = name.get(substr);
+    if(typeof substr_emoji != "undefined")
+    {
+      return substr_emoji;
+    }
+  }
+  return noemoji;
+};
+
 //Update the state with new items and
 export const update = ({ icon, name, buyDate, expDate, user, section }) => {
-  // console.log("icon" + Food2url(icon));
+  console.log(emoji(name));
   const namex = {
-    icon: Food2url(icon),
+    icon: emoji(name),
+    // icon: Food2url(icon),
     name: name,
     buyDate: buyDate,
     expDate: expDate,

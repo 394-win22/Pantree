@@ -151,7 +151,7 @@ export const App = () => {
       <ToastContainer transition={Slide} />
       <MainLayout>
         <Header>
-          <H1>My Kitchen</H1>
+          <H1>My Kitchen </H1>
           <div className="signInBtn">
 
             {user ? <SignOutButton cuser={user.email} foods={userKitchen ? userKitchen.foods : null} />
@@ -164,7 +164,6 @@ export const App = () => {
           {user ?
 
             <div className="content-top">
-
               <input
                 className="search-field"
                 type="text"

@@ -65,22 +65,20 @@ export const ItemCard = styled.div`
     grid-template-columns: 38% 42% 20%;
     grid-template-rows: 60% 15% 25%;
     grid-template-areas: 
-        'img item-name delete'
-        'img purchase-date purchase-date'
-        'img exp-date edit';
+        'txt item-name delete'
+        'txt purchase-date purchase-date'
+        'txt exp-date edit';
     background: ${({ color }) => handleColorType(color)};
     margin: 2%;
 `
-export const ItemImg = styled.img`
+
+export const ItemImg = styled.h1`
+        text-align: center;
         display: flex;
         align-items: center;
         justify-content: center;
-        grid-area: img;
-        align-self: center;
-        justify-self: center;
-        margin-top: 20px;
-        width: 50px;
-        height: 50px;
+        grid-area: txt;
+        font-size: 60px
     `
 
 export const ItemName = styled.p`
