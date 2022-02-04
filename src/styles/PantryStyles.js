@@ -31,6 +31,17 @@ export const H1 = styled.p`
         color: #000000;
     `
 
+export const H2 = styled.p`
+        font-family: Raleway;
+        font-style: italic;
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 38px;
+        margin-top: 50px;
+        color: #b6b6b6;
+        justify-content: center;
+    `
+
 export const Content = styled.div`
         display: flex;
         flex-direction: column;
