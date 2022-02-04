@@ -278,7 +278,6 @@ const emoji = (value) => {
   var value_lower = value.toLowerCase();
   for (let i = value_lower.length+1; i > value_lower.length-3; i--) {
     var substr = value_lower.substring(0,i);
-    console.log(substr);
     var substr_emoji = name.get(substr);
     if(typeof substr_emoji != "undefined")
     {
@@ -290,7 +289,6 @@ const emoji = (value) => {
 
 //Update the state with new items and
 export const update = ({ icon, name, buyDate, expDate, user, section }) => {
-  console.log(emoji(name));
   const namex = {
     icon: emoji(name),
     // icon: Food2url(icon),
