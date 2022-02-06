@@ -67,6 +67,7 @@
   flex-wrap: wrap;
   flex-direction: row;
   margin-top: 50px;
+  width: 85%;
 }
 
 .signInBtn{
@@ -78,4 +79,12 @@
   width: 100%;
   margin-top: 50px;
 
+}
+
+.SectionSelector{
+  margin: 25px;
+  width: 75%;
+  border-radius: 10px;
+  border-color: transparent;
+  height: 1px;
 }

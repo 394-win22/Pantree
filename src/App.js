@@ -17,8 +17,6 @@ import {
 import { ToastContainer, toast, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useState, useEffect } from 'react';
-import { set } from "firebase/database";
-import ReactDOM from "react-dom";
 
 const SignInButton = () => (
   <button className="btn"
@@ -151,7 +149,7 @@ export const App = () => {
       <ToastContainer transition={Slide} />
       <MainLayout>
         <Header>
-          <H1>My Kitchen </H1>
+          <H1>My Kitchen</H1>
           <div className="signInBtn">
 
             {user ? <SignOutButton cuser={user.email} foods={userKitchen ? userKitchen.foods : null} />
@@ -171,21 +169,20 @@ export const App = () => {
                 value={entry}
                 onChange={(e) => { setEntry(e.target.value) }} />
 
-                <DropdownButton
-                  title= {sorting}
-                  id="dropdown-menu-align-right"
-                  onSelect={handleSelect}>
-                  <Dropdown.Item eventKey="option-1">expired</Dropdown.Item>
-                  <Dropdown.Item eventKey="option-2">expiring soon</Dropdown.Item>
-                  <Dropdown.Item eventKey="option-3">good condition</Dropdown.Item>
-                  <Dropdown.Item eventKey="option-4">all</Dropdown.Item>
-                </DropdownButton>
+              <DropdownButton
+                title={sorting}
+                id="dropdown-menu-align-right"
+                onSelect={handleSelect}>
+                <Dropdown.Item eventKey="option-1">expired</Dropdown.Item>
+                <Dropdown.Item eventKey="option-2">expiring soon</Dropdown.Item>
+                <Dropdown.Item eventKey="option-3">good condition</Dropdown.Item>
+                <Dropdown.Item eventKey="option-4">all</Dropdown.Item>
+              </DropdownButton>
               <AddButton />
 
             </div> : ""}
           {!user ? <H2>Sign In To Unlock Your Kitchen</H2> : null}
-          {Object.keys(matched).length === 0 ? <H2>No matched items :(</H2> : null}
-          {userKitchen ? <FoodList foods={ matched } /> : ""}
+          {user ? <FoodList foods={matched} /> : ""}
         </Content>
       </MainLayout>
     </>

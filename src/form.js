@@ -93,7 +93,7 @@ const MyForm = (param) => {
       return
     })
   }
- 
+
 
   return (
     <div className="container">
@@ -272,15 +272,14 @@ export const EditMyForm = (param) => {
 };
 
 const emoji = (value) => {
-  
+
   const name = require("emoji-name-map");
   var noemoji = name.get("shopping_cart"); // default icon
   var value_lower = value.toLowerCase();
-  for (let i = value_lower.length+1; i > value_lower.length-3; i--) {
-    var substr = value_lower.substring(0,i);
+  for (let i = value_lower.length + 1; i > value_lower.length - 3; i--) {
+    var substr = value_lower.substring(0, i);
     var substr_emoji = name.get(substr);
-    if(typeof substr_emoji != "undefined")
-    {
+    if (typeof substr_emoji != "undefined") {
       return substr_emoji;
     }
   }
