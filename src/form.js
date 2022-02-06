@@ -166,9 +166,10 @@ export const EditMyForm = (param) => {
     na = param.n;
   }
 
-  console.log(param.n);
+  //console.log(param.n);
 
   const suggestExpiry = (foodName, foodSection) => {
+    console.log(foodSection)
     setName(foodName)
     setSection(foodSection)
     return expiry_dates.map((exp_food, index) => {
@@ -191,6 +192,21 @@ export const EditMyForm = (param) => {
 
   }
 
+  const editBack = () => {
+    const namex = {
+      icon: emoji(name),
+      // icon: Food2url(icon),
+      name: name,
+      buyDate: buyDate,
+      expDate: expDate,
+      section: 'used',
+    };
+    const id = Math.round(Math.random() * 100000);
+    const newFood = { id, ...namex };
+    pushToFirebase(newFood, user);
+    ReactDOM.render(<App />, document.getElementById("root"));
+  }
+  
   const [name, setName] = useState(na);
   const [buyDate, setbuyDate] = useState(today);
   const [expDate, setexpDate] = useState(experation);
@@ -263,7 +279,7 @@ export const EditMyForm = (param) => {
 
         <input type="submit" value="Finish Editing" className="btn btn-block" />
         <br />
-        <div className="btn2 btn-block" onClick={() => back()}>
+        <div className="btn2 btn-block" onClick={() => editBack()}>
           <center><FaTrashAlt size={20} style={{ color: 'white', cursor: 'pointer', margin: 4 }} /></center>
         </div>
       </form>

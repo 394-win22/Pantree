@@ -45,7 +45,7 @@ export const notify = (foods) => {
   notification("expp", `${expcount} expired, ${abtToExp} about to expire`);
 }
 
-const sections = { F: 'fridge', W: 'freezer', S: 'shelf' };
+const sections = { fridge: 'fridge', freezer: 'freezer', shelf: 'shelf', used: 'used' };
 
 
 export const FoodList = ({ foods }) => {

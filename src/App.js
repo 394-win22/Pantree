@@ -36,8 +36,6 @@ const SignOutButton = ({ cuser, foods }) => {
         Sign Out
       </button>
     </p>
-
-
   </>
   )
 };
@@ -118,7 +116,7 @@ export const App = () => {
 
   if (user) {
     if (userKitchen) {
-      console.log("USER KITCHEN FOODS ---> " + userKitchen.foods)
+      //console.log("USER KITCHEN FOODS ---> " + userKitchen.foods)
       matched = mSearchCriteria(userKitchen);
     }
   }
@@ -179,7 +177,6 @@ export const App = () => {
                 <Dropdown.Item eventKey="option-4">all</Dropdown.Item>
               </DropdownButton>
               <AddButton />
-
             </div> : ""}
           {!user ? <H2>Sign In To Unlock Your Kitchen</H2> : null}
           {user ? <FoodList foods={matched} /> : ""}
