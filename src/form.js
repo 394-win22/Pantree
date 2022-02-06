@@ -192,7 +192,7 @@ export const EditMyForm = (param) => {
 
   }
 
-  const editBack = () => {
+  const toUsed = () => {
     const namex = {
       icon: emoji(name),
       // icon: Food2url(icon),
@@ -279,13 +279,139 @@ export const EditMyForm = (param) => {
 
         <input type="submit" value="Finish Editing" className="btn btn-block" />
         <br />
-        <div className="btn2 btn-block" onClick={() => editBack()}>
+        <div className="btn2 btn-block" onClick={() => toUsed()}>
           <center><FaTrashAlt size={20} style={{ color: 'white', cursor: 'pointer', margin: 4 }} /></center>
         </div>
       </form>
     </div>
   );
 };
+
+export const RecMyForm = (param) => {
+  var experation = new Date().toISOString().substring(0, 10);
+  var today = new Date().toISOString().substring(0, 10);
+  var na = "";
+  var Editing = false;
+
+  if (param.date) {
+    today = param.date;
+    Editing = true;
+  }
+
+  if (param.exp) {
+    experation = param.exp;
+  }
+
+  if (param.n) {
+    na = param.n;
+  }
+
+  //console.log(param.n);
+
+  const suggestExpiry = (foodName, foodSection) => {
+    console.log(foodSection)
+    setName(foodName)
+    setSection(foodSection)
+    return expiry_dates.map((exp_food, index) => {
+      var newday = new Date();
+      if (foodName.toLowerCase() === exp_food.name.toLowerCase()) {
+        if (foodSection === 'fridge') {
+          newday = SetExpirationDate(parseInt(exp_food.fridge))
+        }
+        else if (foodSection === 'shelf') {
+          newday = SetExpirationDate(parseInt(exp_food.shelf))
+        }
+        else {
+          //newday = SetExpirationDate(parseInt(exp_food.freezer))
+        }
+        notification('suggested', foodName);
+        setexpDate(newday);
+      }
+      return
+    })
+
+  }
+  
+  const [name, setName] = useState(na);
+  const [buyDate, setbuyDate] = useState(today);
+  const [expDate, setexpDate] = useState(experation);
+  const [icon, setIcon] = useState("");
+  const user = useUserState();
+  const [section, setSection] = useState('fridge');
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    if (!name || !buyDate || !expDate) {
+      notification('info');
+      return;
+    }
+
+    if (new Date(expDate).getTime() - new Date(buyDate).getTime() < 0) {
+      notification('date');
+      return;
+    }
+
+    update({ icon, name, buyDate, expDate, user, section });
+
+    if (name !== "") {
+    }
+
+    back();
+  };
+
+  return (
+    <div className="container">
+      <ToastContainer transition={Slide} />
+      <form className="add-form" onSubmit={onSubmit}>
+        <div className="form-control">
+          <label>Food Name</label>
+          <input
+            type="text"
+            placeholder="Add Food"
+            value={name}
+            onChange={(e) => suggestExpiry(e.target.value, section)}
+          />
+        </div>
+        <div className="form-control">
+          <label>Purchase Date</label>
+          <input
+            type="date"
+            placeholder="Purchase Date"
+            value={buyDate}
+            onChange={(e) => setbuyDate(e.target.value)}
+          />
+        </div>
+        <div className="form-control">
+          <label>Expiration Date</label>
+          <input
+            type="date"
+            placeholder="Expiration Date"
+            value={expDate}
+            onChange={(e) => setexpDate(e.target.value)}
+          />
+        </div>
+
+        <DropdownButton
+          title={section}
+          id="dropdown-menu-align-left"
+          onSelect={(e) => suggestExpiry(name, e)}
+        >
+          <Dropdown.Item eventKey="fridge">fridge</Dropdown.Item>
+          <Dropdown.Item eventKey="shelf">shelf</Dropdown.Item>
+          <Dropdown.Item eventKey="freezer">freezer</Dropdown.Item>
+        </DropdownButton>
+
+        <input type="submit" value="Recycle" className="btn btn-block" />
+        <br />
+        <div className="btn2 btn-block" onClick={() =>     back()}>
+          <center><FaTrashAlt size={20} style={{ color: 'white', cursor: 'pointer', margin: 4 }} /></center>
+        </div>
+      </form>
+    </div>
+  );
+};
+
 
 const emoji = (value) => {
 

@@ -25,7 +25,7 @@ import {
   FaMinus,
   FaRegTimesCircle,
 } from "react-icons/fa";
-import { EditMyForm, notification } from "./form.js";
+import { EditMyForm, RecMyForm, notification } from "./form.js";
 import {
   H2,
 } from "./styles/PantryStyles.js";
@@ -86,7 +86,7 @@ export const FoodList = ({ foods }) => {
         <div className="food-list">
           {
             Object.values(sortedFoods).map((food, index) => (
-              <Food key={index} food={food} />
+              <Food key={index} food={food} section = {section} />
             ))
           }
         </div>
@@ -106,42 +106,77 @@ const SectionSelector = ({ section, setSection }) => (
 const SectionButton = ({ section, setSection, checked }) => (
   <>
     <input type="radio" id={section} className="btn-check" autoComplete="off" checked={checked} onChange={() => setSection(section)} />
-    <label class="btn btn-success m-1 p-2" htmlFor={section}>
+    <label className="btn btn-success m-1 p-2" htmlFor={section}>
       {section}
     </label>
   </>
 );
 
-const Food = ({ food }) => {
+const Food = ({ food, section }) => {
   const [isShown, setIsShown] = useState(false);
   const user = useUserState();
-  return (
-    <ItemCard
-      color={Expired(food.expDate)}
-      onClick={() => editButton({ food, user })}
-      style={{ cursor: 'pointer' }}
-    >
-      <ItemImg>
-        {food.icon}
-      </ItemImg>
-
-      <ItemName >{
-        food.name.length > 10 ?
-          food.name.substring(0, 10) + "..." :
-          food.name
-      } {' '}</ItemName>
-
-      <PurchaseDate ><FaCalendar size={16} style={{ color: '#989898' }} />&nbsp;&nbsp;{food.buyDate}</PurchaseDate>
-      <ExpDate><FaClock size={15} style={{ color: '#989898' }} />&nbsp;&nbsp;{food.expDate}
-      </ExpDate>
-    </ItemCard>
-  )
+  if(section === 'used'){
+    console.log("!!!!!!!!!!!!!!")
+    return (
+      <ItemCard
+        color={Expired(food.expDate)}
+        onClick={() => recButton({ food, user })}
+        style={{ cursor: 'pointer' }}
+      >
+        <ItemImg>
+          {food.icon}
+        </ItemImg>
+  
+        <ItemName >{
+          food.name.length > 10 ?
+            food.name.substring(0, 10) + "..." :
+            food.name
+        } {' '}</ItemName>
+  
+        <PurchaseDate ><FaCalendar size={16} style={{ color: '#989898' }} />&nbsp;&nbsp;{food.buyDate}</PurchaseDate>
+        <ExpDate><FaClock size={15} style={{ color: '#989898' }} />&nbsp;&nbsp;{food.expDate}
+        </ExpDate>
+      </ItemCard>
+    )
+  }
+  else{
+    return (
+      <ItemCard
+        color={Expired(food.expDate)}
+        onClick={() => editButton({ food, user })}
+        style={{ cursor: 'pointer' }}
+      >
+        <ItemImg>
+          {food.icon}
+        </ItemImg>
+  
+        <ItemName >{
+          food.name.length > 10 ?
+            food.name.substring(0, 10) + "..." :
+            food.name
+        } {' '}</ItemName>
+  
+        <PurchaseDate ><FaCalendar size={16} style={{ color: '#989898' }} />&nbsp;&nbsp;{food.buyDate}</PurchaseDate>
+        <ExpDate><FaClock size={15} style={{ color: '#989898' }} />&nbsp;&nbsp;{food.expDate}
+        </ExpDate>
+      </ItemCard>
+    )
+  }
+  
 };
 
 const editButton = async ({ food, user }) => {
 
   deleteFromFirebase(food, user);
   ReactDOM.render(<EditMyForm date={food.buyDate} exp={food.expDate} n={food.name} />, document.getElementById("root"));
+
+  return;
+};
+
+const recButton = async ({ food, user }) => {
+
+  deleteFromFirebase(food, user);
+  ReactDOM.render(<RecMyForm date={food.buyDate} exp={food.expDate} n={food.name} />, document.getElementById("root"));
 
   return;
 };
