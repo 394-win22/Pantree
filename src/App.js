@@ -137,7 +137,7 @@ export const App = () => {
   }
 
   const quickadd = () => {
-    const today = new Date().toISOString().substring(0, 10);
+    const today = new Date().toLocaleString( 'sv', { timeZone: 'America/Chicago' } ).substring(0, 10);
     update("", "food1", today, today, user, 'fridge')
   }
 

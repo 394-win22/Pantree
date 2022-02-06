@@ -29,13 +29,13 @@ const SetExpirationDate = (day) => {
   var experation = new Date();
   var setDays = day;
   experation.setDate(experation.getDate() + setDays);
-  var writtenEXP = experation.toISOString().substring(0, 10);
+  var writtenEXP = experation.toLocaleString( 'sv', { timeZone: 'America/Chicago' } ).substring(0, 10);
   return writtenEXP;
 
 }
 
 const MyForm = (param) => {
-  var today = new Date().toISOString().substring(0, 10);
+  var today = new Date().toLocaleString( 'sv', { timeZone: 'America/Chicago' } ).substring(0, 10);
   var na = "";
   //console.log(param.n);
 
@@ -148,8 +148,8 @@ const MyForm = (param) => {
 };
 
 export const EditMyForm = (param) => {
-  var experation = new Date().toISOString().substring(0, 10);
-  var today = new Date().toISOString().substring(0, 10);
+  var experation = new Date().toLocaleString( 'sv', { timeZone: 'America/Chicago' } ).substring(0, 10);
+  var today = new Date().toLocaleString( 'sv', { timeZone: 'America/Chicago' } ).substring(0, 10);
   var na = "";
   var Editing = false;
 
@@ -288,8 +288,8 @@ export const EditMyForm = (param) => {
 };
 
 export const RecMyForm = (param) => {
-  var experation = new Date().toISOString().substring(0, 10);
-  var today = new Date().toISOString().substring(0, 10);
+  var experation = new Date().toLocaleString( 'sv', { timeZone: 'America/Chicago' } ).substring(0, 10);
+  var today = new Date().toLocaleString( 'sv', { timeZone: 'America/Chicago' } ).substring(0, 10);
   var na = "";
   var Editing = false;
 

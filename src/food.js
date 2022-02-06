@@ -116,7 +116,6 @@ const Food = ({ food, section }) => {
   const [isShown, setIsShown] = useState(false);
   const user = useUserState();
   if(section === 'used'){
-    console.log("!!!!!!!!!!!!!!")
     return (
       <ItemCard
         color={Expired(food.expDate)}
@@ -183,7 +182,7 @@ const recButton = async ({ food, user }) => {
 
 // return different numbers depending on expiration status
 export const Expired = (a) => {
-  const today = new Date().toISOString().substring(0, 10);
+  const today = new Date().toLocaleString( 'sv', { timeZone: 'America/Chicago' } ).substring(0, 10);
   const diff = numDaysBetween(new Date(a), new Date(today));
   if (diff < 0) {
     // expired
