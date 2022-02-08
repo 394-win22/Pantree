@@ -29,13 +29,13 @@ const SetExpirationDate = (day) => {
   var experation = new Date();
   var setDays = day;
   experation.setDate(experation.getDate() + setDays);
-  var writtenEXP = experation.toLocaleString( 'sv', { timeZone: 'America/Chicago' } ).substring(0, 10);
+  var writtenEXP = experation.toLocaleString('sv', { timeZone: 'America/Chicago' }).substring(0, 10);
   return writtenEXP;
 
 }
 
 const MyForm = (param) => {
-  var today = new Date().toLocaleString( 'sv', { timeZone: 'America/Chicago' } ).substring(0, 10);
+  var today = new Date().toLocaleString('sv', { timeZone: 'America/Chicago' }).substring(0, 10);
   var na = "";
   //console.log(param.n);
 
@@ -45,6 +45,7 @@ const MyForm = (param) => {
   const [icon, setIcon] = useState("");
   const user = useUserState();
   const [section, setSection] = useState('fridge');
+  const [isSuggested, setIsSuggested] = useState(false);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -72,28 +73,34 @@ const MyForm = (param) => {
   };
 
 
-  const suggestExpiry = (foodName, foodSection) => {
+  const suggestExpiry = (foodName, foodSection, isSuggested) => {
     setName(foodName)
     setSection(foodSection)
+    if (foodName.length < 2)
+      setIsSuggested(false)
     return expiry_dates.map((exp_food, index) => {
       var newday = new Date();
-      if (foodName.toLowerCase() === exp_food.name.toLowerCase()) {
-        if (foodSection === 'fridge') {
-          newday = SetExpirationDate(parseInt(exp_food.fridge))
+      var exp_food_lower = exp_food.name.toLowerCase();
+      for (let i = exp_food_lower.length; i > 0 && isSuggested === false && i > exp_food_lower.length * 0.7; i--) {
+        var substr = exp_food_lower.substring(0, i);
+        if (substr === foodName.toLowerCase()) {
+          if (foodSection === 'fridge') {
+            newday = SetExpirationDate(parseInt(exp_food.fridge))
+          }
+          else if (foodSection === 'shelf') {
+            newday = SetExpirationDate(parseInt(exp_food.shelf))
+          }
+          else {
+            newday = SetExpirationDate(parseInt(exp_food.freezer))
+          }
+          notification('suggested', exp_food.name);
+          setIsSuggested(true)
+          setexpDate(newday);
         }
-        else if (foodSection === 'shelf') {
-          newday = SetExpirationDate(parseInt(exp_food.shelf))
-        }
-        else {
-          newday = SetExpirationDate(parseInt(exp_food.freezer))
-        }
-        notification('suggested', foodName)
-        setexpDate(newday);
       }
       return
     })
   }
-
 
   return (
     <div className="container">
@@ -106,7 +113,7 @@ const MyForm = (param) => {
             type="text"
             placeholder="Add Food"
             value={name}
-            onChange={(e) => suggestExpiry(e.target.value, section)}
+            onChange={(e) => suggestExpiry(e.target.value, section, isSuggested)}
           />
         </div>
         <div className="form-control">
@@ -130,7 +137,7 @@ const MyForm = (param) => {
         <DropdownButton
           title={section}
           id="dropdown-menu-align-left"
-          onSelect={(e) => suggestExpiry(name, e)}
+          onSelect={(e) => suggestExpiry(name, e, false)}
         >
           <Dropdown.Item eventKey="fridge">fridge</Dropdown.Item>
           <Dropdown.Item eventKey="shelf">shelf</Dropdown.Item>
@@ -148,8 +155,8 @@ const MyForm = (param) => {
 };
 
 export const EditMyForm = (param) => {
-  var experation = new Date().toLocaleString( 'sv', { timeZone: 'America/Chicago' } ).substring(0, 10);
-  var today = new Date().toLocaleString( 'sv', { timeZone: 'America/Chicago' } ).substring(0, 10);
+  var experation = new Date().toLocaleString('sv', { timeZone: 'America/Chicago' }).substring(0, 10);
+  var today = new Date().toLocaleString('sv', { timeZone: 'America/Chicago' }).substring(0, 10);
   var na = "";
   var Editing = false;
 
@@ -168,28 +175,33 @@ export const EditMyForm = (param) => {
 
   //console.log(param.n);
 
-  const suggestExpiry = (foodName, foodSection) => {
-    console.log(foodSection)
+  const suggestExpiry = (foodName, foodSection, isSuggested) => {
     setName(foodName)
     setSection(foodSection)
+    if (foodName.length < 2)
+      setIsSuggested(false)
     return expiry_dates.map((exp_food, index) => {
       var newday = new Date();
-      if (foodName.toLowerCase() === exp_food.name.toLowerCase()) {
-        if (foodSection === 'fridge') {
-          newday = SetExpirationDate(parseInt(exp_food.fridge))
+      var exp_food_lower = exp_food.name.toLowerCase();
+      for (let i = exp_food_lower.length; i > 0 && isSuggested === false && i > exp_food_lower.length * 0.7; i--) {
+        var substr = exp_food_lower.substring(0, i);
+        if (substr === foodName.toLowerCase()) {
+          if (foodSection === 'fridge') {
+            newday = SetExpirationDate(parseInt(exp_food.fridge))
+          }
+          else if (foodSection === 'shelf') {
+            newday = SetExpirationDate(parseInt(exp_food.shelf))
+          }
+          else {
+            newday = SetExpirationDate(parseInt(exp_food.freezer))
+          }
+          notification('suggested', exp_food.name);
+          setIsSuggested(true)
+          setexpDate(newday);
         }
-        else if (foodSection === 'shelf') {
-          newday = SetExpirationDate(parseInt(exp_food.shelf))
-        }
-        else {
-          //newday = SetExpirationDate(parseInt(exp_food.freezer))
-        }
-        notification('suggested', foodName);
-        setexpDate(newday);
       }
       return
     })
-
   }
 
   const toUsed = () => {
@@ -206,13 +218,14 @@ export const EditMyForm = (param) => {
     pushToFirebase(newFood, user);
     ReactDOM.render(<App />, document.getElementById("root"));
   }
-  
+
   const [name, setName] = useState(na);
   const [buyDate, setbuyDate] = useState(today);
   const [expDate, setexpDate] = useState(experation);
   const [icon, setIcon] = useState("");
   const user = useUserState();
   const [section, setSection] = useState('fridge');
+  const [isSuggested, setIsSuggested] = useState(false);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -245,7 +258,7 @@ export const EditMyForm = (param) => {
             type="text"
             placeholder="Add Food"
             value={name}
-            onChange={(e) => suggestExpiry(e.target.value, section)}
+            onChange={(e) => suggestExpiry(e.target.value, section, isSuggested)}
           />
         </div>
         <div className="form-control">
@@ -270,7 +283,7 @@ export const EditMyForm = (param) => {
         <DropdownButton
           title={section}
           id="dropdown-menu-align-left"
-          onSelect={(e) => suggestExpiry(name, e)}
+          onSelect={(e) => suggestExpiry(name, e, false)}
         >
           <Dropdown.Item eventKey="fridge">fridge</Dropdown.Item>
           <Dropdown.Item eventKey="shelf">shelf</Dropdown.Item>
@@ -288,8 +301,8 @@ export const EditMyForm = (param) => {
 };
 
 export const RecMyForm = (param) => {
-  var experation = new Date().toLocaleString( 'sv', { timeZone: 'America/Chicago' } ).substring(0, 10);
-  var today = new Date().toLocaleString( 'sv', { timeZone: 'America/Chicago' } ).substring(0, 10);
+  var experation = new Date().toLocaleString('sv', { timeZone: 'America/Chicago' }).substring(0, 10);
+  var today = new Date().toLocaleString('sv', { timeZone: 'America/Chicago' }).substring(0, 10);
   var na = "";
   var Editing = false;
 
@@ -308,36 +321,42 @@ export const RecMyForm = (param) => {
 
   //console.log(param.n);
 
-  const suggestExpiry = (foodName, foodSection) => {
-    console.log(foodSection)
+  const suggestExpiry = (foodName, foodSection, isSuggested) => {
     setName(foodName)
     setSection(foodSection)
+    if (foodName.length < 2)
+      setIsSuggested(false)
     return expiry_dates.map((exp_food, index) => {
       var newday = new Date();
-      if (foodName.toLowerCase() === exp_food.name.toLowerCase()) {
-        if (foodSection === 'fridge') {
-          newday = SetExpirationDate(parseInt(exp_food.fridge))
+      var exp_food_lower = exp_food.name.toLowerCase();
+      for (let i = exp_food_lower.length; i > 0 && isSuggested === false && i > exp_food_lower.length * 0.7; i--) {
+        var substr = exp_food_lower.substring(0, i);
+        if (substr === foodName.toLowerCase()) {
+          if (foodSection === 'fridge') {
+            newday = SetExpirationDate(parseInt(exp_food.fridge))
+          }
+          else if (foodSection === 'shelf') {
+            newday = SetExpirationDate(parseInt(exp_food.shelf))
+          }
+          else {
+            newday = SetExpirationDate(parseInt(exp_food.freezer))
+          }
+          notification('suggested', exp_food.name);
+          setIsSuggested(true)
+          setexpDate(newday);
         }
-        else if (foodSection === 'shelf') {
-          newday = SetExpirationDate(parseInt(exp_food.shelf))
-        }
-        else {
-          //newday = SetExpirationDate(parseInt(exp_food.freezer))
-        }
-        notification('suggested', foodName);
-        setexpDate(newday);
       }
       return
     })
-
   }
-  
+
   const [name, setName] = useState(na);
   const [buyDate, setbuyDate] = useState(today);
   const [expDate, setexpDate] = useState(experation);
   const [icon, setIcon] = useState("");
   const user = useUserState();
   const [section, setSection] = useState('fridge');
+  const [isSuggested, setIsSuggested] = useState(false);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -370,7 +389,7 @@ export const RecMyForm = (param) => {
             type="text"
             placeholder="Add Food"
             value={name}
-            onChange={(e) => suggestExpiry(e.target.value, section)}
+            onChange={(e) => suggestExpiry(e.target.value, section, isSuggested)}
           />
         </div>
         <div className="form-control">
@@ -395,7 +414,7 @@ export const RecMyForm = (param) => {
         <DropdownButton
           title={section}
           id="dropdown-menu-align-left"
-          onSelect={(e) => suggestExpiry(name, e)}
+          onSelect={(e) => suggestExpiry(name, e, false)}
         >
           <Dropdown.Item eventKey="fridge">fridge</Dropdown.Item>
           <Dropdown.Item eventKey="shelf">shelf</Dropdown.Item>
@@ -404,7 +423,7 @@ export const RecMyForm = (param) => {
 
         <input type="submit" value="Recycle" className="btn btn-block" />
         <br />
-        <div className="btn2 btn-block" onClick={() =>     back()}>
+        <div className="btn2 btn-block" onClick={() => back()}>
           <center><FaTrashAlt size={20} style={{ color: 'white', cursor: 'pointer', margin: 4 }} /></center>
         </div>
       </form>
@@ -506,7 +525,7 @@ export const notification = (type, data) => {
       );
       break;
     case 'suggested':
-      toast.success('Expiration date suggested', {
+      toast.success(`Expiration date of ${data} suggested`, {
         position: "top-center",
         autoClose: 2000,
         hideProgressBar: true,
