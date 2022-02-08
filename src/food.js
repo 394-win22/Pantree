@@ -116,6 +116,7 @@ const Food = ({ food, section }) => {
   const [isShown, setIsShown] = useState(false);
   const user = useUserState();
   if(section === 'used'){
+    checkIfOld({food, user});
     return (
       <ItemCard
         color={Expired(food.expDate)}
@@ -173,12 +174,21 @@ const editButton = async ({ food, user }) => {
 };
 
 const recButton = async ({ food, user }) => {
-
   deleteFromFirebase(food, user);
   ReactDOM.render(<RecMyForm date={food.buyDate} exp={food.expDate} n={food.name} />, document.getElementById("root"));
 
   return;
 };
+
+const checkIfOld = async ({food, user }) => {
+  const threshord = 30;
+  const today = new Date().toLocaleString( 'sv', { timeZone: 'America/Chicago' } ).substring(0, 10);
+  if(numDaysBetween(new Date(today), new Date(food.expDate)) > threshord){
+    console.log("Deleted")
+    deleteFromFirebase(food, user);
+  }
+  return;
+}
 
 // return different numbers depending on expiration status
 export const Expired = (a) => {
