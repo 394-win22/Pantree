@@ -85,7 +85,7 @@ const MyForm = (param) => {
           newday = SetExpirationDate(parseInt(exp_food.shelf))
         }
         else {
-          //newday = SetExpirationDate(parseInt(exp_food.freezer))
+          newday = SetExpirationDate(parseInt(exp_food.freezer))
         }
         notification('suggested', foodName)
         setexpDate(newday);
