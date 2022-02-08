@@ -58,9 +58,11 @@ export const App = () => {
 
   if (error) return <h1>{error}</h1>;
   if (loading) return <h1>Loading the data...</h1>;
+  
 
   const mSearchCriteria = (user_kitchen) => {
     if (user_kitchen) {
+     // 
       if (entry) {
         for (const [key, value] of Object.entries(user_kitchen.foods)) {
           switch (sorting) {
@@ -86,6 +88,8 @@ export const App = () => {
           }
         }
       } else {
+        //console.log(typeof user_kitchen.foods);
+        if (typeof user_kitchen.foods === 'undefined') return window.location.reload(true);
         for (const [key, value] of Object.entries(user_kitchen.foods)) {
           switch (sorting) {
             case 'all':
