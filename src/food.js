@@ -75,16 +75,16 @@ export const FoodList = ({ foods }) => {
   return (
     Object.keys(sortedFoods).length === 0 ?
       <>
-        <div className="SectionSelector">
+        <center className="SectionSelector">
           <SectionSelector section={section} setSection={setSection} />
-        </div>
+        </center>
         <H2>No matched items :(</H2>
       </>
       :
       <>
-        <div className="SectionSelector">
+        <center className="SectionSelector">
           <SectionSelector section={section} setSection={setSection} />
-        </div>
+        </center>
         <div className="food-list">
           {
             Object.values(sortedFoods).map((food, index) => (

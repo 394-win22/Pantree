@@ -19,7 +19,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useState, useEffect } from 'react';
 
 const SignInButton = () => (
-  <button className="btn"
+  <button className="btn" style = {{ outerHeight: 10}}
     onClick={() => signInWithG()}>
     Sign In
   </button>
@@ -31,7 +31,7 @@ const SignOutButton = ({ cuser, foods }) => {
   return (<>
     <p className="email">
       {window.innerWidth > 800 ? cuser : null}
-      <button className="btn" id="out" style={{ width: 120, margin: 20 }}
+      <button className="btn" id="out" style={{ width: 120, margin: 10 }}
         onClick={() => signOutOfG()}>
         Sign Out
       </button>
@@ -163,7 +163,7 @@ export const App = () => {
         <Content>
           {user ?
 
-            <div className="content-top">
+            <div className= {"content-top"}>
               <input
                 className="search-field"
                 type="text"

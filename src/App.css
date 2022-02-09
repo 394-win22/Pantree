@@ -19,6 +19,28 @@
   background-color: #d8c1ae;
   display: flex;
   margin-top: 25px;
+  flex-direction: row;
+}
+
+.content-top-row{
+  width: 100%;
+  background-color: #d8c1ae;
+  display: flex;
+  margin-top: 25px;
+  flex-direction: column;
+}
+
+.content-button-top{
+  display: flex;
+  margin-top: 25px;
+  flex-direction: row;
+}
+
+.content-top-button-row{
+  width: 45%;
+  display: flex;
+  margin-top: 25px;
+  flex-direction: row;
 }
 
 .search-field{
@@ -87,4 +109,5 @@
   border-radius: 10px;
   border-color: transparent;
   height: 1px;
+  justify-content: center;
 }

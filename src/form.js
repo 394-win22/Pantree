@@ -20,7 +20,7 @@ export const AddButton = () => (
         ReactDOM.render(<MyForm />, document.getElementById("root"))
       }
     >
-      Add Food
+      { window.innerWidth > 600 ? "Add food" : "add"}
     </button>
   </>
 );
@@ -111,7 +111,7 @@ const MyForm = (param) => {
           <label>Food Name</label>
           <input
             type="text"
-            placeholder="Add Food"
+            placeholder = {window.innerWidth > 400 ? "Add food" : "Add"} 
             value={name}
             onChange={(e) => suggestExpiry(e.target.value, section, isSuggested)}
           />
