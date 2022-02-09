@@ -471,7 +471,7 @@ const back = () => {
 export const notification = (type, data) => {
   switch (type) {
     case 'expp':
-      toast.warn(data, {
+      toast.info(data, {
         position: "top-center",
         autoClose: 2000,
         hideProgressBar: true,
