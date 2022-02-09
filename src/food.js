@@ -35,11 +35,13 @@ export const notify = (foods) => {
   var expcount = 0;
   var abtToExp = 0;
   for (const [key, value] of Object.entries(foods)) {
-    if (Expired(value.expDate) === 0) {
-      expcount = expcount + 1;
-    }
-    if (Expired(value.expDate) === 1) {
-      abtToExp = abtToExp + 1
+    if (value.section !== 'used') {
+      if (Expired(value.expDate) === 0) {
+        expcount = expcount + 1;
+      }
+      if (Expired(value.expDate) === 1) {
+        abtToExp = abtToExp + 1
+      }
     }
   }
   notification("expp", `${expcount} expired, ${abtToExp} about to expire`);
